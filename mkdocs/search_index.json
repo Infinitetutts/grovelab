@@ -2,13 +2,13 @@
     "docs": [
         {
             "location": "/",
-            "text": "Welcome to Grovelab Nigga\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
-            "title": "Introduction"
+            "text": "Welcome to Grovelab\n\n\nDevOps and Linux SysAdmin Wiki\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.",
+            "title": "Home"
         },
         {
-            "location": "/#welcome-to-grovelab-nigga",
-            "text": "For full documentation visit  mkdocs.org .",
-            "title": "Welcome to Grovelab Nigga"
+            "location": "/#welcome-to-grovelab",
+            "text": "DevOps and Linux SysAdmin Wiki",
+            "title": "Welcome to Grovelab"
         },
         {
             "location": "/#commands",
@@ -16,14 +16,34 @@
             "title": "Commands"
         },
         {
-            "location": "/#project-layout",
-            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
-            "title": "Project layout"
+            "location": "/linux-commands/",
+            "text": "Find\n\n\nfind ~/ -type f -iname \"gameme.smx\" | while read line\ndo\n  cp -v gameme.smx $line\ndone\n\n\n\n\nFind and remove permissions\n\n\nfind . -type f -iname \"*.ini\" -exec chmod -x {} \\;\n\n\n\n\nFind port of runnin application\n\n\nnetstat -lnp | grep ts3\nnetstat -l -a -p -n  \n\n\n\n\nFind appliction listening on a port\n\n\nsudo lsof -i :80",
+            "title": "Linux Commands"
         },
         {
-            "location": "/Linux_Commands/",
-            "text": "cat\nless\nvim\nnano",
-            "title": "Linux Commands"
+            "location": "/linux-commands/#find",
+            "text": "find ~/ -type f -iname \"gameme.smx\" | while read line\ndo\n  cp -v gameme.smx $line\ndone  Find and remove permissions  find . -type f -iname \"*.ini\" -exec chmod -x {} \\;  Find port of runnin application  netstat -lnp | grep ts3\nnetstat -l -a -p -n    Find appliction listening on a port  sudo lsof -i :80",
+            "title": "Find"
+        },
+        {
+            "location": "/linux/",
+            "text": "Checking logs, IpTables, Apache, Wordpress logins\n\n\nLook at top IP addresses in your access log use:\n\n\ntail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more \n\n\n\n\nIf nothing looks suspicious in IP list, use this query to check top hit URLs on your box:\n\n\ncut -f 2 -d '\"' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more \n\n\n\n\nCheck for common user agents :\n \n\n\ncut -f 4 -d '\"' access.log|sort|uniq -c|sort -nr|more \n\n\n\n\nBackup all changed config files\n\n\ndebsums -ce | tar --files-from=- -cf configs.tar",
+            "title": "Linux"
+        },
+        {
+            "location": "/linux/#checking-logs-iptables-apache-wordpress-logins",
+            "text": "Look at top IP addresses in your access log use:  tail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more   If nothing looks suspicious in IP list, use this query to check top hit URLs on your box:  cut -f 2 -d '\"' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more   Check for common user agents :    cut -f 4 -d '\"' access.log|sort|uniq -c|sort -nr|more",
+            "title": "Checking logs, IpTables, Apache, Wordpress logins"
+        },
+        {
+            "location": "/linux/#backup-all-changed-config-files",
+            "text": "debsums -ce | tar --files-from=- -cf configs.tar",
+            "title": "Backup all changed config files"
+        },
+        {
+            "location": "/about/about/",
+            "text": "Grovelab is the wiki for DevOps and Linux SysAdmins",
+            "title": "About"
         }
     ]
 }
