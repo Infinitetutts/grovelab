@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Linux Tools Commands - Grovelab</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Linux Tools Commands";
+    var mkdocs_page_input_path = "linuxtools-commands.md";
+    var mkdocs_page_url = "/linuxtools-commands/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Grovelab</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-sysadmin/">Linux Sysadmin</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-commands/">Linux Commands</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Linux Tools Commands</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#sensu">Sensu</a></li>
+    
+
+    <li class="toctree-l2"><a href="#ansible">Ansible</a></li>
+    
+
+    <li class="toctree-l2"><a href="#elasticsearch">ElasticSearch</a></li>
+    
+
+    <li class="toctree-l2"><a href="#redis">Redis</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../text/">Text (awk sed grep etc )</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mysql/">MySQL</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../apache/">Apache</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../docker/">Docker</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../git/">Git</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../vim/">Vim</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-desktop/">Linux Desktop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../macos/">MacOS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Grovelab</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Linux Tools Commands</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="sensu">Sensu</h2>
+<p><strong>Clear dashboard</strong></p>
+<pre><code>sensu-cli event list --format json | jq --raw-output &quot;map(select( .[\&quot;check\&quot;][\&quot;issued\&quot;]  )) | .[] | .client.name + \&quot; \&quot; +  .check.name &quot; | xargs --verbose --no-run-if-empty -n2 sensu-cli resolve 
+</code></pre>
+
+<h2 id="ansible">Ansible</h2>
+<p><strong>Run playbook</strong></p>
+<pre><code>ansible-playbook -i inventory/foo/hosts -l webservers -u ubuntu -S install_sensu.yml 
+</code></pre>
+
+<p><code>-i</code> = inventory file, <code>-l</code> = server group, <code>-u</code> = ssh user, <code>-S</code> = playbook</p>
+<p><strong>Send ping to all servers within host file</strong></p>
+<pre><code>ansible all -m ping -i hosts 
+</code></pre>
+
+<h2 id="elasticsearch">ElasticSearch</h2>
+<p><strong>Delete logs</strong></p>
+<pre><code>20 0 * * * /usr/local/bin/curator --host 127.0.0.1 delete indices --older-than 30 --time-unit days --timestring '%Y.%m.%d'
+</code></pre>
+
+<p><strong>Get indices and shard info</strong></p>
+<pre><code>curl -XGET &quot;http://localhost:9200/_cat/shards?v&quot;
+curl -XGET &quot;http://localhost:9200/_cat/indices&quot;
+</code></pre>
+
+<p><strong>Get indexes</strong></p>
+<pre><code>curl -XGET 'http://localhost:9200/filebeat*/_aliases?pretty'
+</code></pre>
+
+<p><strong>Get Index Sizes</strong></p>
+<pre><code>curl localhost:9200/index1,index2/_stats
+curl localhost:9200/filebeat-2016.07.13/_stats
+</code></pre>
+
+<p><strong>Delete Indexes</strong></p>
+<pre><code>curl -XDELETE 'http://localhost:9200/twitter/'
+</code></pre>
+
+<p><strong>Node Stats</strong></p>
+<pre><code>curl -XGET &quot;http://localhost:9200/_nodes/stats?v&quot; | jq .
+</code></pre>
+
+<p><strong>Cluster info</strong></p>
+<pre><code>curl -XGET 'http://localhost:9200/_cluster/health?pretty'
+curl -XGET 'http://localhost:9200/_cluster/state'
+</code></pre>
+
+<p><strong>Node Info</strong></p>
+<pre><code>curl -XGET 'http://localhost:9200/_nodes'
+curl -XGET 'http://localhost:9200/_nodes/stats'
+</code></pre>
+
+<p><strong>Filebeat-2016.07.13 (jq displays in json format)</strong></p>
+<pre><code>curl localhost:9200/filebeat-2016.07.13,filebeat-2016.07.12/_stats | jq .
+</code></pre>
+
+<h2 id="redis">Redis</h2>
+<p><strong>Connect to redis host</strong></p>
+<pre><code>redis-cli -h 192.168.1.1
+</code></pre>
+
+<p><strong>Commands</strong></p>
+<p><code>info</code>      – Displays ALL info, (Starting point) <br />
+<code>info stats</code>      – Displays select info  <br />
+<code>config get maxmemory-policy</code> <br />
+<code>config set maxmemory-policy volatile-lru</code><br />
+<code>config get maxmemory</code><br />
+<code>config set maxmemory 20000000000</code><br />
+<code>config get \*</code>      – Displays all configurable variables 
+<code>slowlog get 25</code>      – Displays the top 25 slow queries<br />
+<code>resetstat</code>      –  Resets stats (Not all)<br />
+<code>help config resetstat</code>      – Explains Command </p>
+<p><strong>Watch Command</strong></p>
+<pre><code>watch redis-cli -h 192.168.1.1 info stats
+</code></pre>
+
+<p><strong>Eviction policies</strong>   </p>
+<p>The exact behavior Redis follows when the maxmemory limit is reached is configured using the maxmemory-policyconfiguration directive.</p>
+<p>The following policies are available: <br />
+<code>noeviction</code>: return errors when the memory limit was reached and the client is trying to execute commands that could result in more memory to be used (most write commands, but DEL and a few more exceptions).  <br />
+<code>allkeys-lru</code>: evict keys trying to remove the less recently used (LRU) keys first, in order to make space for the new data added.  <br />
+<code>volatile-lru</code>: evict keys trying to remove the less recently used (LRU) keys first, but only among keys that have anexpire set, in order to make space for the new data added.<br />
+<code>allkeys-random</code>: evict random keys in order to make space for the new data added.<br />
+<code>volatile-random</code>: evict random keys in order to make space for the new data added, but only evict keys with anexpire set.<br />
+<code>volatile-ttl</code>: In order to make space for the new data, evict only keys with an expire set, and try to evict keys with a shorter time to live (TTL) first. </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../text/" class="btn btn-neutral float-right" title="Text (awk sed grep etc )">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../linux-commands/" class="btn btn-neutral" title="Linux Commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../linux-commands/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../text/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

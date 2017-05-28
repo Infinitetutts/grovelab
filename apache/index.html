@@ -64,7 +64,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
+    <a class="" href="../linuxtools-commands/">Linux Tools Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../text/">Text (awk sed grep etc )</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -77,6 +82,30 @@
     <a class="current" href="./">Apache</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#create-config-file">Create config file</a></li>
+    
+
+    <li class="toctree-l2"><a href="#set-apache-password-protected-directories-with-htaccess-file">Set Apache Password Protected Directories With .htaccess File</a></li>
+    
+
+    <li class="toctree-l2"><a href="#disable-os-identity-and-apache-version-from-errors">Disable OS Identity and Apache Version from Errors</a></li>
+    
+
+    <li class="toctree-l2"><a href="#secure-apache">Secure Apache</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#mod_security-and-mod_evasive-modules">mod_security and mod_evasive modules</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#enable-gzip-compression-in-apache">Enable GZip Compression in Apache</a></li>
+    
+
+    <li class="toctree-l2"><a href="#enable-caching">Enable caching</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -107,7 +136,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
+    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
 	    </li>
           
         </ul>
@@ -142,7 +171,147 @@
           <div role="main">
             <div class="section">
               
-                <p>coming soon</p>
+                <h2 id="create-config-file">Create config file</h2>
+<pre><code>sudo vi /etc/apache2/sites-available/iandi.co.za.conf 
+</code></pre>
+
+<p><strong>Standard Domain</strong></p>
+<pre><code>&lt;VirtualHost *:80&gt;
+
+  ServerName iandi.co.za 
+  ServerAlias www.iandi.co.za
+
+  ServerAdmin IandI@OneLove.Jah
+  DocumentRoot /var/www/iandi.co.za
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+&lt;/VirtualHost&gt; 
+</code></pre>
+
+<p><strong>Sub Domain</strong></p>
+<pre><code>&lt;VirtualHost *:80&gt;
+  ServerName wiki.iandi.co.za
+  DocumentRoot /var/www/wiki.iandi.co.za
+&lt;/VirtualHost&gt; 
+</code></pre>
+
+<h2 id="set-apache-password-protected-directories-with-htaccess-file">Set Apache Password Protected Directories With .htaccess File</h2>
+<p><strong>1. Make sure Apache is configured to use .htaccess file</strong></p>
+<pre><code>&lt;Directory /var/www/swag.iandi.co.za&gt;
+  Options Indexes Includes FollowSymLinks MultiViews
+  AllowOverride AuthConfig
+  Order allow,deny
+  Allow from all
+&lt;/Directory&gt;
+</code></pre>
+
+<p><strong>2. Create a password file with htpasswd</strong></p>
+<p>Create directory outside apache document root, so that only Apache can access password file. The password-file should be placed somewhere not accessible from the web. This is so that people cannot download the password file:</p>
+<pre><code>mkdir -p /home/john/swag.iandi.co.za
+</code></pre>
+
+<p><strong>Add new user</strong></p>
+<pre><code>htpasswd -c /home/john/swag.iandi.co.za/apasswords username
+</code></pre>
+
+<p><strong>Allow apache user www-data to read our password file</strong></p>
+<pre><code>chown www-data:www-data /home/john/swag.iandi.co.za/apasswords
+chmod 0660 /home/john/swag.iandi.co.za/apasswords
+</code></pre>
+
+<p><strong>Create .htaccess file</strong></p>
+<pre><code>cd /var/www/swag.iandi.co.za
+vi .htaccess
+</code></pre>
+
+<p><strong>Add following text</strong></p>
+<pre><code>AuthType Basic
+AuthName &quot;Restricted Access&quot;
+AuthUserFile /home/john/swag.iandi.co.za/apasswords
+Require user username
+</code></pre>
+
+<p><strong>Enable config file</strong></p>
+<pre><code class="bash">sudo a2ensite iandi.co.za.conf 
+</code></pre>
+
+<h2 id="disable-os-identity-and-apache-version-from-errors">Disable OS Identity and Apache Version from Errors</h2>
+<pre><code>     sudo vi /etc/apache2/apache2.conf  
+</code></pre>
+
+<p>Add or Edit</p>
+<pre><code>     ServerSignature Off 
+     ServerTokens Prod  
+</code></pre>
+
+<p><strong>Disable Directory Listing</strong></p>
+<pre><code class="bash">     sudo vi /etc/apache2/sites-available/site.conf  
+</code></pre>
+
+<p>or</p>
+<pre><code class="bash">     sudo vi /etc/apache2/apache2.conf  
+</code></pre>
+
+<p>Add</p>
+<pre><code>&lt;Directory /var/www/html&gt;
+    Options -Indexes
+&lt;/Directory&gt; 
+</code></pre>
+
+<h2 id="secure-apache">Secure Apache</h2>
+<h3 id="mod_security-and-mod_evasive-modules">mod_security and mod_evasive modules</h3>
+<p>Where <code>mod_security</code> works as a firewall for our web applications and allows us to monitor traffic on a real time basis. It also helps us to protect our websites or web server from brute force attacks. You can simply install <code>mod_security</code> on your server with the help of your default package installers.</p>
+<p>Where <code>mod_evasive</code> works very efficiently, it takes one request to process and processes it very well. It prevents DDOS attacks from doing as much damage. This feature of <code>mod_evasive</code> enables it to handle the HTTP brute force and Dos or DDos attack. This module detects attacks with three methods.</p>
+<ol>
+<li>If so many requests come to a same page in a few times per second. </li>
+<li>If any child process trying to make more than 50 concurrent requests. </li>
+<li>If any IP still trying to make new requests when its temporarily blacklisted.</li>
+</ol>
+<p><strong>Install</strong></p>
+<pre><code class="bash">sudo apt-get install libapache2-mod-evasive libapache2-mod-security2 
+</code></pre>
+
+<p><strong>Enable Apache module</strong></p>
+<pre><code>sudo a2enmod mod_security &amp;&amp; sudo a2enmod mode_evasion
+</code></pre>
+
+<p><strong>Restart Apache</strong></p>
+<pre><code>sudo service apache restart
+</code></pre>
+
+<p><a href="http://www.tecmint.com/apache-security-tips/1">Apache security tips</a></p>
+<h2 id="enable-gzip-compression-in-apache">Enable GZip Compression in Apache</h2>
+<p><strong>Enable mods</strong></p>
+<pre><code>a2enmod deflate;a2enmod filter
+</code></pre>
+
+<p><strong>Add to Apache config</strong></p>
+<pre><code>&lt;Directory&gt;
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript image/svg+xml
+&lt;/Directory&gt;
+</code></pre>
+
+<h2 id="enable-caching">Enable caching</h2>
+<p><strong>Enable mods</strong></p>
+<pre><code>a2enmod expires; a2enmod headers
+</code></pre>
+
+<p><strong>Add to Apache config</strong></p>
+<pre><code>&lt;IfModule mod_expires.c&gt;
+  ExpiresActive On
+  ExpiresDefault &quot;access plus 30 days&quot;
+  ExpiresByType text/html &quot;access plus 1 day&quot;
+  ExpiresByType image/gif &quot;access plus 30 days&quot;
+  ExpiresByType image/jpeg &quot;access plus 30 days&quot;
+  ExpiresByType image/png &quot;access plus 30 days&quot;
+  ExpiresByType text/css &quot;access plus 30 days&quot;
+  ExpiresByType text/javascript &quot;access plus 30 days&quot;
+  ExpiresByType application/x-javascript &quot;access plus 30 days&quot;
+  ExpiresByType text/xml &quot;access plus 30 days&quot;
+&lt;/IfModule&gt;
+</code></pre>
               
             </div>
           </div>

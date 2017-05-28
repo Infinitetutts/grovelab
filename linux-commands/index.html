@@ -74,6 +74,9 @@
     <li class="toctree-l2"><a href="#clonedownload-a-website">Clone/Download a website</a></li>
     
 
+    <li class="toctree-l2"><a href="#backup-all-changed-config-files">Backup all changed config files</a></li>
+    
+
     <li class="toctree-l2"><a href="#download-maps-from-csgo-web-server">Download maps from csgo web server</a></li>
     
 
@@ -112,7 +115,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
+    <a class="" href="../linuxtools-commands/">Linux Tools Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../text/">Text (awk sed grep etc )</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -152,7 +160,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
+    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
 	    </li>
           
         </ul>
@@ -224,6 +232,10 @@ done
 <pre><code>find /tmp -type f -empty -delete
 </code></pre>
 
+<p><strong>Find and replace string</strong></p>
+<pre><code class="bash">find . -type f -name &quot;gamemode_comp*&quot; -exec sed -i 's/123/dfg/g' {} + 
+</code></pre>
+
 <h2 id="listening-on-ports-traffic-network-connections">Listening on Ports, Traffic Network connections</h2>
 <p><strong>Find port of runnin application</strong></p>
 <pre><code class="bash">netstat -lnp | grep ts3
@@ -265,6 +277,10 @@ netstat -l -a -p -n
 
 <h2 id="clonedownload-a-website">Clone/Download a website</h2>
 <pre><code class="bash">wget --limit-rate=200k --no-clobber --convert-links --random-wait -r -p -E -e robots=off -U mozilla http://www.kossboss.com 
+</code></pre>
+
+<h2 id="backup-all-changed-config-files">Backup all changed config files</h2>
+<pre><code class="bash">debsums -ce | tar --files-from=- -cf configs.tar 
 </code></pre>
 
 <h2 id="download-maps-from-csgo-web-server">Download maps from csgo web server</h2>
@@ -446,7 +462,7 @@ sudo yum -y install ImageMagick
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../string-manipulation/" class="btn btn-neutral float-right" title="Text (awk sed grep etc )">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../linuxtools-commands/" class="btn btn-neutral float-right" title="Linux Tools Commands">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../linux-sysadmin/" class="btn btn-neutral" title="Linux Sysadmin"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -478,7 +494,7 @@ sudo yum -y install ImageMagick
         <span><a href="../linux-sysadmin/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../string-manipulation/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../linuxtools-commands/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

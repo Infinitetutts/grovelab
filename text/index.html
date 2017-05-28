@@ -18,8 +18,8 @@
   <script>
     // Current page data
     var mkdocs_page_name = "Text (awk sed grep etc )";
-    var mkdocs_page_input_path = "string-manipulation.md";
-    var mkdocs_page_url = "/string-manipulation/";
+    var mkdocs_page_input_path = "text.md";
+    var mkdocs_page_url = "/text/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -62,12 +62,32 @@
     <a class="" href="../linux-commands/">Linux Commands</a>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../linuxtools-commands/">Linux Tools Commands</a>
+	    </li>
+          
             <li class="toctree-l1 current">
 		
     <a class="current" href="./">Text (awk sed grep etc )</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#awk-sed-cut-grep-tail">awk, sed, cut ,grep, tail</a></li>
+    <li class="toctree-l2"><a href="#awk">AWK</a></li>
+    
+
+    <li class="toctree-l2"><a href="#sed-regex">SED &amp; REGEX</a></li>
+    
+
+    <li class="toctree-l2"><a href="#cut">CUT</a></li>
+    
+
+    <li class="toctree-l2"><a href="#tail">TAIL</a></li>
+    
+
+    <li class="toctree-l2"><a href="#sort">Sort</a></li>
+    
+
+    <li class="toctree-l2"><a href="#grep">GREP</a></li>
     
 
     </ul>
@@ -110,7 +130,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
+    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
 	    </li>
           
         </ul>
@@ -145,96 +165,133 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="awk-sed-cut-grep-tail">awk, sed, cut ,grep, tail</h2>
+                <h2 id="awk">AWK</h2>
 <p><strong>Removing quotes</strong></p>
-<pre><code>awk '{ print "\""$0"\""}' inputfile
+<pre><code class="bash">awk '{ print &quot;\&quot;&quot;$0&quot;\&quot;&quot;}' inputfile
 </code></pre>
-<p><strong>Using pure bash</strong></p>
-<pre><code>while read FOO; do
-   echo -e "\"$FOO\""
-done &lt; inputfile
-</code></pre>
-<p>where inputfile would be a file containing the lines without quotes.</p>
-<p><strong>If your file has empty lines, awk is definitely the way to go:</strong></p>
-<pre><code>awk 'NF { print "\""$0"\""}' inputfile
-</code></pre>
-<p>NF tells awk to only execute the print command when the Number of Fields is more than zero (line is not empty).</p>
-<pre><code> awk '{ print "\""$0"\""}' mapcycle_surf.txt &gt; mapcycle_surf1.txt
-</code></pre>
-<p><strong>AWK's printf, NR and $0 make it easy to have precise and flexible control over the formatting</strong></p>
-<pre><code> awk '{printf("%010d %s\n", NR, $0)}' maplist.txt
-</code></pre>
-<p>0000000001 surf_map1 0000000002 surf_map2 0000000003 surf_map3</p>
-<pre><code>awk '{printf("%d %s \n", NR, $0)}' mapcycle_surf1.txt
-</code></pre>
-<p>1 "surf_004_final1" 2 "surf_1day" 3 "surf_2012_beta12"</p>
-<pre><code>awk '{printf("%s %d \n" ,$0 , NR)}' mapcycle_surf1.txt
-</code></pre>
-<p>"surf_004_final1" 1 "surf_1day" 2 "surf_2012_beta12" 3</p>
-<pre><code>awk '{printf("%s \"%d\" \n" ,$0 , NR)}' mapcycle_surf1.txt
-</code></pre>
-<p>"surf_004_final1" "1" "surf_1day" "2" "surf_2012_beta12" "3"</p>
-<pre><code>awk '{printf("%s \"%d\" \n" ,$0 , NR-1)}' mapcycle_surf1.txt &gt; mapcycle_surf.txt
-</code></pre>
-<p>cat mapcycle_surf.txt "surf_004_final1" "0" "surf_1day" "1" "surf_2012_beta12" "2" "surf_3" "3"</p>
-<p>String to replace: "surf_prime_time_r3vamp /"</p>
-<pre><code>sed -i -E "s,surf_[A-Za-z0-9]+_?-?[A-Za-z0-9]+_?[A-Za-z0-9]+\s/, 123," workmaps.txt
-</code></pre>
-<p>-i input file -E Regex</p>
-<p><strong>Remove empty lines</strong></p>
-<pre><code>sed -i -E "s,^\s*$,," workmaps.txt
-</code></pre>
-<p><strong>Remove the first character sed</strong></p>
-<pre><code>cat input_file | sed 's/^..//' &gt; output_file
-</code></pre>
-<p>Instead of selecting x number of characters, if you like to extract a whole field, you can combine option -f and -d. The option -f specifies which field you want to extract, and the option -d specifies what is the field delimiter that is used in the input file.</p>
-<p>The following example displays only first field of each lines from /etc/passwd file using the field delimiter : (colon). In this case, the 1st field is the username. The file</p>
-<pre><code>cut -d':' -f1 /etc/passwd
-</code></pre>
-<p><strong>Search and replace string</strong></p>
-<pre><code>find . -type f -name "gamemode_comp*" -exec sed -i 's/YB53XUH3/"J123f34J123454!^dfg"/g' {} +
 
+<p>If your file has empty lines, awk is definitely the way to go</p>
+<pre><code class="bash">awk 'NF { print &quot;\&quot;&quot;$0&quot;\&quot;&quot;}' inputfile.txt &gt; newfile.txt
+</code></pre>
 
-awk '{print $3}' maps.txt
+<p><code>NF</code> tells awk to only execute the print command when the Number of Fields is more than zero (line is not empty).</p>
+<p><strong>Print 3rd field</strong></p>
+<pre><code class="bash">awk '{print $3}' maps.txt 
 </code></pre>
-<p>before: [ ] surf_zion.nav.bz2 2015-06-21 18:27 132</p>
-<p>after: surf_whoknows.nav.bz2</p>
-<p><strong>Displays unique values from compared files</strong></p>
-<pre><code>grep -v -f &lt;compare-file-1&gt; &lt;compare-file-2&gt;
-</code></pre>
-<p><strong>Search and replace text in multiple files and escape special characters</strong></p>
-<pre><code>sed -i 's/test.data\*\.keyboard/test\.\*\.keyboard/g' *
-</code></pre>
-<p>before: test.data*.keyboard</p>
-<p>after: test.*.keyboard</p>
-<p><strong>Escape Characters</strong></p>
-<pre><code>sed -i 's/\(foo\)/bin/g' file.json
-</code></pre>
-<p><strong>Replace string but keep indention or spaces</strong></p>
-<pre><code>sed -i  '/"interval":/i \ \ \ \ \ \ "occurrences": 2,' file.json
-</code></pre>
-<p><strong>Append line after match</strong></p>
-<pre><code>sed  '/\[option\]/a Hello World' input
-</code></pre>
-<p><strong>Insert line before match</strong></p>
-<pre><code>sed  '/\[option\]/i Hello World' input
-</code></pre>
-<p><strong>Delete first 4 lines and last 4 lines from a text file</strong></p>
-<pre><code> tail -n +5 test.json | head -n -4 &gt; test.json.new &amp;&amp; mv test.json.new test.json
 
- tail -n +5 srv_ssh.json | head -n -4 &gt; test.json.new &amp;&amp; mv test.json.new srv_ssh.json
-</code></pre>
-<p><strong>Remove duplicate lines</strong></p>
-<pre><code> sort file.log | uniq &gt; newfile.log
-</code></pre>
 <p><strong>Sort strings by length</strong></p>
-<pre><code> awk '{ print length($0),$0 | "sort -n"}'  usragnt.txt
+<pre><code class="bash">awk '{ print length($0),$0 | &quot;sort -n&quot;}'  usragnt.txt
 </code></pre>
+
+<p><strong>Examples</strong>  </p>
+<p>AWK's <code>printf</code>, <code>NR</code> and <code>$0</code> make it easy to have precise and flexible control over the formatting</p>
+<pre><code class="bash">awk '{printf(&quot;%010d %s\n&quot;, NR, $0)}' maplist.txt
+</code></pre>
+
+<p>Output:  <br />
+<em>0000000001 surf_map1</em> <br />
+<em>0000000002 surf_map2</em><br />
+<em>0000000003 surf_map3</em>  </p>
+<pre><code class="bash">awk '{printf(&quot;%d %s \n&quot;, NR, $0)}' mapcycle_surf1.txt 
+</code></pre>
+
+<p>Output:<br />
+<em>1 "surf_004_final1"</em> <br />
+<em>2 "surf_1day"</em> <br />
+<em>3 "surf_2012_beta12"</em> </p>
+<pre><code class="bash">awk '{printf(&quot;%s %d \n&quot; ,$0 , NR)}' mapcycle_surf1.txt 
+</code></pre>
+
+<p>Output: <br />
+<em>"surf_004_final1" 1</em> <br />
+<em>"surf_1day" 2</em> <br />
+<em>"surf_2012_beta12" 3</em> </p>
+<pre><code class="bash">awk '{printf(&quot;%s \&quot;%d\&quot; \n&quot; ,$0 , NR)}' mapcycle_surf1.txt 
+</code></pre>
+
+<p>Output:  <br />
+<em>"surf_004_final1" "1"</em> <br />
+<em>"surf_1day" "2"</em><br />
+<em>"surf_2012_beta12" "3"</em></p>
+<pre><code class="bash">awk '{printf(&quot;%s \&quot;%d\&quot; \n&quot; ,$0 , NR-1)}' mapcycle_surf1.txt &gt; mapcycle_surf.txt 
+</code></pre>
+
+<p>Output:  <br />
+<em>"surf_004_final1" "0"</em> <br />
+<em>"surf_1day" "1"</em> <br />
+<em>"surf_2012_beta12" "2"</em><br />
+<em>"surf_3" "3"</em>  </p>
+<h2 id="sed-regex">SED &amp; REGEX</h2>
+<p><strong>Find and replace using REGEX</strong>  <br />
+String to replace <code>surf_prime_time_r3vamp /</code></p>
+<pre><code class="bash">sed -i -E &quot;s,surf_[A-Za-z0-9]+_?-?[A-Za-z0-9]+_?[A-Za-z0-9]+\s/, 123,&quot; workmaps.txt 
+</code></pre>
+
+<p><code>-i</code> input file <br />
+<code>-E</code> Regex</p>
+<p><strong>Remove empty lines</strong></p>
+<pre><code class="bash">sed -i -E &quot;s,^\s*$,,&quot; workmaps.txt 
+</code></pre>
+
+<p><strong>Remove the first character sed</strong></p>
+<pre><code class="bash">cat input_file | sed 's/^..//' &gt; output_file
+</code></pre>
+
+<p><strong>Search and replace text in multiple files and escape special characters</strong></p>
+<pre><code class="bash">sed -i 's/test.data\*\.keyboard/test\.\*\.keyboard/g' *
+</code></pre>
+
+<p>Before: <code>test.data*.keyboard</code>
+After: <code>test.*.keyboard</code></p>
+<p><strong>Escape Characters</strong></p>
+<pre><code class="bash">sed -i 's/\(foo\)/bin/g' file.json
+</code></pre>
+
+<p><strong>Replace string but keep indention or spaces</strong></p>
+<pre><code class="bash">sed -i  '/&quot;interval&quot;:/i \ \ \ \ \ \ &quot;occurrences&quot;: 2,' file.json
+</code></pre>
+
+<p><strong>Append line after match</strong></p>
+<pre><code class="bash">sed  '/\[option\]/a Hello World' input
+</code></pre>
+
+<p><strong>Insert line before match</strong></p>
+<pre><code class="bash">sed  '/\[option\]/i Hello World' input
+</code></pre>
+
+<p><strong>Search and replace string</strong></p>
+<pre><code class="bash">find . -type f -name &quot;gamemode_comp*&quot; -exec sed -i 's/YB53XUH3/&quot;J123f34J123454!^dfg&quot;/g' {} + 
+</code></pre>
+
+<p>Before: <code>[ ] surf_zion.nav.bz2 2015-06-21 18:27 132</code>
+After: <code>surf_whoknows.nav.bz2</code></p>
+<h2 id="cut">CUT</h2>
+<p><strong>Displayfirst field after delimenator</strong></p>
+<pre><code class="bash">cut -d':' -f1 /etc/passwd
+</code></pre>
+
+<p>Prints the usernames from <code>/etc/passwd</code></p>
+<h2 id="tail">TAIL</h2>
+<p><strong>Delete first 4 lines and last 4 lines from a text file</strong></p>
+<pre><code class="bash">tail -n +5 srv_ssh.json | head -n -4 &gt; test.json.new &amp;&amp; mv test.json.new srv_ssh.json
+</code></pre>
+
+<h2 id="sort">Sort</h2>
+<p><strong>Remove duplicate lines</strong></p>
+<pre><code class="bash">sort file.log | uniq &gt; newfile.log
+</code></pre>
+
+<h2 id="grep">GREP</h2>
 <p><strong>Display files that do not have string:</strong></p>
-<pre><code> grep -L "foo" *
+<pre><code class="bash">grep -L &quot;foo&quot; *
 </code></pre>
+
 <p><strong>Display files that do have string</strong></p>
-<pre><code> grep -n "foo" *
+<pre><code class="bash">grep -n &quot;foo&quot; *
+</code></pre>
+
+<p><strong>Displays unique values from compared files</strong></p>
+<pre><code class="bash">grep -v -f &lt;compare-file-1&gt; &lt;compare-file-2&gt; 
 </code></pre>
               
             </div>
@@ -246,7 +303,7 @@ awk '{print $3}' maps.txt
         <a href="../mysql/" class="btn btn-neutral float-right" title="MySQL">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../linux-commands/" class="btn btn-neutral" title="Linux Commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../linuxtools-commands/" class="btn btn-neutral" title="Linux Tools Commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -272,7 +329,7 @@ awk '{print $3}' maps.txt
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../linux-commands/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../linuxtools-commands/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../mysql/" style="color: #fcfcfc">Next &raquo;</a></span>

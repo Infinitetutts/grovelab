@@ -57,11 +57,11 @@
     <a class="current" href="./">Linux Sysadmin</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#checking-logs-iptables-apache-wordpress-logins">Checking logs, IpTables, Apache, Wordpress logins</a></li>
+    <li class="toctree-l2"><a href="#ddos-mitigation-process">DDOS Mitigation Process</a></li>
     
         <ul>
         
-            <li><a class="toctree-l3" href="#backup-all-changed-config-files">Backup all changed config files</a></li>
+            <li><a class="toctree-l3" href="#working-with-logs-iptables-apache-wordpress-logins">Working with Logs, IpTables, Apache, Wordpress logins</a></li>
         
         </ul>
     
@@ -94,7 +94,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
+    <a class="" href="../linuxtools-commands/">Linux Tools Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../text/">Text (awk sed grep etc )</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -134,7 +139,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
+    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
 	    </li>
           
         </ul>
@@ -169,7 +174,8 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="checking-logs-iptables-apache-wordpress-logins">Checking logs, IpTables, Apache, Wordpress logins</h2>
+                <h2 id="ddos-mitigation-process">DDOS Mitigation Process</h2>
+<h3 id="working-with-logs-iptables-apache-wordpress-logins">Working with Logs, IpTables, Apache, Wordpress logins</h3>
 <p><strong>Look at top IP addresses in your access log use:</strong></p>
 <pre><code class="bash">tail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more 
 </code></pre>
@@ -229,10 +235,6 @@ egrep &quot;POST .*xmlrpc.php&quot; access.log | awk '{print $1,$4,$5,$6,$7,subs
 <pre><code class="bash">service iptables restart 
 service iptables save 
 sudo service apache2 restart  
-</code></pre>
-
-<h3 id="backup-all-changed-config-files">Backup all changed config files</h3>
-<pre><code class="bash">debsums -ce | tar --files-from=- -cf configs.tar 
 </code></pre>
 
 <h2 id="remove-sudo-password-prompt">Remove sudo password prompt</h2>

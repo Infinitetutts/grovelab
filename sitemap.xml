@@ -27,7 +27,15 @@
 
     
     <url>
-     <loc>/string-manipulation/</loc>
+     <loc>/linuxtools-commands/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/text/</loc>
      <lastmod>2017-05-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -91,7 +99,7 @@
 
     
     <url>
-     <loc>/understanding-opensouce-tools/</loc>
+     <loc>/opensouce-tools-and-terms/</loc>
      <lastmod>2017-05-28</lastmod>
      <changefreq>daily</changefreq>
     </url>

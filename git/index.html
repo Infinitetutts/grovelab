@@ -64,7 +64,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
+    <a class="" href="../linuxtools-commands/">Linux Tools Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../text/">Text (awk sed grep etc )</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -87,6 +92,12 @@
     <a class="current" href="./">Git</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#commands">Commands</a></li>
+    
+
+    <li class="toctree-l2"><a href="#setting-up-a-new-git-repo">Setting up a new git repo</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -107,7 +118,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
+    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
 	    </li>
           
         </ul>
@@ -142,7 +153,21 @@
           <div role="main">
             <div class="section">
               
-                <p>coming soon</p>
+                <h2 id="commands">Commands</h2>
+<p><code>git pull</code> - Pull latest code from git<br />
+<code>git checkout -b onelove</code> - Create branch  <br />
+<code>git checkout onelove</code> - Change branch <br />
+<code>git status</code> - Check difference between git branch and local files<br />
+<code>git add .</code> - Adds all files in directory to be commited<br />
+<code>git add jah.sh</code> - Adds specific file to be commited<br />
+<code>git push -f origin branch_name</code> - Force git push  </p>
+<h2 id="setting-up-a-new-git-repo">Setting up a new git repo</h2>
+<pre><code>git init .
+git add init.vim
+git commit -m &quot;First step towards neovim&quot;
+git remote add origin git@github.com:Infinitetutts/dotfiles.git
+git push origin master
+</code></pre>
               
             </div>
           </div>

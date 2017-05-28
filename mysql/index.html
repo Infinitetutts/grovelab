@@ -64,7 +64,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
+    <a class="" href="../linuxtools-commands/">Linux Tools Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../text/">Text (awk sed grep etc )</a>
 	    </li>
           
             <li class="toctree-l1 current">
@@ -72,6 +77,42 @@
     <a class="current" href="./">MySQL</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#create-a-new-user-and-grant-privileges">Create a New User And Grant Privileges</a></li>
+    
+
+    <li class="toctree-l2"><a href="#commands">Commands</a></li>
+    
+
+    <li class="toctree-l2"><a href="#status-process-list-open-connections">Status, process list, open connections</a></li>
+    
+
+    <li class="toctree-l2"><a href="#allow-remote-access-to-mysql">Allow remote access to MySQL</a></li>
+    
+
+    <li class="toctree-l2"><a href="#dumping-and-importing-utf-8-the-safe-way">Dumping and importing UTF-8 the safe way</a></li>
+    
+
+    <li class="toctree-l2"><a href="#resetting-root-password">Resetting root password</a></li>
+    
+
+    <li class="toctree-l2"><a href="#check-set-variables">Check Set Variables</a></li>
+    
+
+    <li class="toctree-l2"><a href="#display-default-mysql-config-files-and-execute-order">Display default mysql config files and execute order</a></li>
+    
+
+    <li class="toctree-l2"><a href="#migrate-mysql-users-permissions-and-database">Migrate MySQL users, permissions and database</a></li>
+    
+
+    <li class="toctree-l2"><a href="#mysql-engines">MYSQL Engines</a></li>
+    
+
+    <li class="toctree-l2"><a href="#mysql-character-encoding">MYSQL Character Encoding</a></li>
+    
+
+    <li class="toctree-l2"><a href="#create-tables">Create tables</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -107,7 +148,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
+    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
 	    </li>
           
         </ul>
@@ -142,7 +183,182 @@
           <div role="main">
             <div class="section">
               
-                <p>coming soon</p>
+                <h2 id="create-a-new-user-and-grant-privileges">Create a New User And Grant Privileges</h2>
+<p><strong>Local Access</strong></p>
+<pre><code>CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';  
+</code></pre>
+
+<p><strong>External Access</strong></p>
+<pre><code>CREATE USER 'newuser'@'%' IDENTIFIED BY 'password';  
+</code></pre>
+
+<p><strong>Grant all privileges on all Databases and tables</strong></p>
+<pre><code>GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost' IDENTIFIED BY 'password';  
+</code></pre>
+
+<p><strong>Grant all privileges one a specific databases(wikimedia) and all tables with external access</strong></p>
+<pre><code>GRANT ALL PRIVILEGES ON wikimedia . * TO 'newuser'@'%' IDENTIFIED BY 'password'; 
+
+FLUSH PRIVILEGES;
+</code></pre>
+
+<h2 id="commands">Commands</h2>
+<p><strong>View All users</strong>  </p>
+<pre><code>SELECT USER,Host FROM mysql.user\G; 
+</code></pre>
+
+<p><code>\G</code> for neat output  </p>
+<p><strong>Delete MySQL user</strong></p>
+<pre><code>DELETE FROM mysql.user WHERE USER = 'john'; 
+</code></pre>
+
+<p><strong>Delete MySQL user with specific host</strong></p>
+<pre><code>DELETE FROM mysql.user WHERE USER = 'john' AND Host = '%';
+</code></pre>
+
+<p><strong>MySQL Dump</strong>
+<em>Dump with correct DB encoding to be safe, see in section further down</em></p>
+<pre><code>mysqldump -h localhost -u root -pP@ssw0rd db01 &gt; db01.sql; 
+</code></pre>
+
+<p><strong>MySQL Restore</strong></p>
+<pre><code>mysql -h localhost -u root -pP@ssw0rd db01 &lt; db01.sql; 
+</code></pre>
+
+<p><strong>Insert values to table</strong></p>
+<pre><code>INSERT INTO table01 (a, b, c) VALUES ('1','2','3');
+</code></pre>
+
+<p><strong>Update values in a field</strong></p>
+<pre><code>UPDATE table01 SET col1 = 'a', col2 = 'b', col3 = 'c' WHERE FIELD = '1';
+</code></pre>
+
+<p>Example:</p>
+<pre><code>UPDATE table01 SET token = '12312312asd' WHERE service_id = '100'&quot;;
+</code></pre>
+
+<p><strong>Delete row from table</strong></p>
+<pre><code>DELETE FROM orders WHERE id_users = 1 AND id_product = 2 LIMIT 1;
+DELETE FROM table01 WHERE col1 LIKE 'abc'&quot;;
+</code></pre>
+
+<p><strong>Import tables to another database, keeps the same structure and primary keys</strong></p>
+<pre><code>INSERT IGNORE INTO db1.table1 SELECT * FROM db2.table1;
+</code></pre>
+
+<p><strong>Change root password with mysqladmin command</strong></p>
+<pre><code>mysqladmin -u root -p'oldpassword' password newpass 
+</code></pre>
+
+<h2 id="status-process-list-open-connections">Status, process list, open connections</h2>
+<p><strong>Open connections</strong></p>
+<pre><code>mysql&gt; SHOW STATUS LIKE 'Conn%';
+</code></pre>
+
+<pre><code>+---------------+-------+
+| Variable_name | VALUE |
++---------------+-------+
+| Connections   | 8     | 
++---------------+-------+
+</code></pre>
+
+<p><strong>Process list</strong></p>
+<pre><code>mysql&gt; SHOW processlist;
+</code></pre>
+
+<pre><code>+----+------+-----------------+--------+---------+------+-------+------------------+
+| Id | USER | Host            | db     | Command | TIME | State | Info             |
++----+------+-----------------+--------+---------+------+-------+------------------+
+|  3 | root | localhost       | webapp | Query   |    0 | NULL  | SHOW processlist | 
+|  5 | root | localhost:61704 | webapp | Sleep   |  208 |       | NULL             | 
+|  6 | root | localhost:61705 | webapp | Sleep   |  208 |       | NULL             | 
+|  7 | root | localhost:61706 | webapp | Sleep   |  208 |       | NULL             | 
++----+------+-----------------+--------+---------+------+-------+------------------+
+</code></pre>
+
+<p><strong>Status</strong></p>
+<pre><code> mysqladmin STATUS
+</code></pre>
+
+<pre><code>Uptime: 4661  Threads: 1  Questions: 200  Slow queries: 0  Opens: 16  FLUSH
+TABLES: 1  OPEN TABLES: 6  Queries per SECOND avg: 0.043 
+</code></pre>
+
+<h2 id="allow-remote-access-to-mysql">Allow remote access to MySQL</h2>
+<pre><code>vim /etc/mysql/my.cnf 
+
+bind-address=YOUR-SERVER-IP 
+</code></pre>
+
+<h2 id="dumping-and-importing-utf-8-the-safe-way">Dumping and importing UTF-8 the safe way</h2>
+<p><strong>SQL Dump</strong></p>
+<pre><code>mysqldump -uroot -p DATABASE -r utf8.dump 
+</code></pre>
+
+<p><strong>Importing and setting UTF8</strong></p>
+<pre><code>mysql -uroot -p --default-character-set=utf8 database 
+SET names='utf8'; 
+SOURCE utf8.dump; 
+</code></pre>
+
+<h2 id="resetting-root-password">Resetting root password</h2>
+<p><strong>Stop MySQL</strong></p>
+<pre><code class="bash">sudo service mysql stop 
+</code></pre>
+
+<p><strong>Start MySQL in safe mode</strong></p>
+<pre><code class="bash">sudo mysqld_safe --skip-grant-tables &amp; 
+</code></pre>
+
+<p><strong>Login as root</strong></p>
+<pre><code class="bash">mysql -uroot 
+</code></pre>
+
+<p><strong>Instruct MySQL which database to use</strong></p>
+<pre><code>USE mysql; 
+</code></pre>
+
+<p><strong>Reset Password</strong></p>
+<pre><code>UPDATE USER SET password=PASSWORD(&quot;mynewpassword&quot;) WHERE USER='root';
+</code></pre>
+
+<p><strong>Flush privileges</strong></p>
+<pre><code>FLUSH privileges;
+</code></pre>
+
+<p><strong>Start MySQL</strong></p>
+<pre><code class="bash">sudo service mysql start 
+</code></pre>
+
+<h2 id="check-set-variables">Check Set Variables</h2>
+<pre><code>mysqladmin -u USER -ph@ckm3  VARIABLES | grep max_connections 
+</code></pre>
+
+<h2 id="display-default-mysql-config-files-and-execute-order">Display default mysql config files and execute order</h2>
+<pre><code>mysql --help | grep Default -A 1 
+</code></pre>
+
+<h2 id="migrate-mysql-users-permissions-and-database">Migrate MySQL users, permissions and database</h2>
+<p><a href="http://www.it-iss.com/mysql/mysql-copying-a-database-users-and-privileges-between-two-servers/">Migrate MySQL Settings</a></p>
+<h2 id="mysql-engines">MYSQL Engines</h2>
+<p>InnoDB is almost always the best option, since it has good concurrency support.</p>
+<p>MyISAM may be faster in single-user or read-only installations. MyISAM databases tend to get corrupted more often than InnoDB databases.</p>
+<h2 id="mysql-character-encoding">MYSQL Character Encoding</h2>
+<p>In binary mode, is more efficient than MySQL's UTF-8 mode, and allows you to use the full range of Unicode characters.</p>
+<p>In UTF-8 mode, MySQL will know what character set your data is in, and can present and convert it appropriately, but it will not let you store characters above the Basic Multilingual Plane. | utf-8 | | 26 | </p>
+<h2 id="create-tables">Create tables</h2>
+<pre><code>     CREATE TABLE tutorials_tbl(
+       tutorial_id INT NOT NULL AUTO_INCREMENT,
+       tutorial_title VARCHAR(100) NOT NULL,
+       tutorial_author VARCHAR(40) NOT NULL,
+       submission_date DATE,
+       PRIMARY KEY ( tutorial_id )
+    );
+</code></pre>
+
+<p>Field Attribute NOT NULL is being used because we do not want this field to be NULL. So if user will try to create a record with NULL value, then MySQL will raise an error.</p>
+<p>Field Attribute AUTO_INCREMENT tells MySQL to go ahead and add the next available number to the id field.</p>
+<p>Keyword PRIMARY KEY is used to define a column as primary key. You can use multiple columns separated by comma to define a primary key. </p>
               
             </div>
           </div>
@@ -153,7 +369,7 @@
         <a href="../apache/" class="btn btn-neutral float-right" title="Apache">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../string-manipulation/" class="btn btn-neutral" title="Text (awk sed grep etc )"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../text/" class="btn btn-neutral" title="Text (awk sed grep etc )"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -179,7 +395,7 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../string-manipulation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../text/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../apache/" style="color: #fcfcfc">Next &raquo;</a></span>
