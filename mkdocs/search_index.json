@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "Welcome to Grovelab\n\n\nDevOps, SysAdmin and Linux Wiki <3\n\n\nFound any errors? Submit a pull request !\n\n\nRaw Files\n\n\nFiles are conveniently in mark down language\n\n\nIf you would contribute more\n\nSetup the development enviroment: \n\nmkdocs-grovelab",
+            "text": "Welcome to Grovelab\n\n\nDevOps, SysAdmin and Linux Wiki <3\n\n\nFound any errors? Submit a pull request !\n\n\nRaw Files\n\n\nFiles are conveniently in mark down language\n\n\nIf you would like contribute more\n\nSetup the development enviroment: \n\nmkdocs-grovelab",
             "title": "Home"
         },
         {
@@ -12,7 +12,7 @@
         },
         {
             "location": "/#devops-sysadmin-and-linux-wiki-3",
-            "text": "Found any errors? Submit a pull request !  Raw Files  Files are conveniently in mark down language  If you would contribute more \nSetup the development enviroment:  mkdocs-grovelab",
+            "text": "Found any errors? Submit a pull request !  Raw Files  Files are conveniently in mark down language  If you would like contribute more \nSetup the development enviroment:  mkdocs-grovelab",
             "title": "DevOps, SysAdmin and Linux Wiki &lt;3"
         },
         {
