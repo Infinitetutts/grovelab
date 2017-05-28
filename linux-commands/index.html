@@ -52,6 +52,11 @@
     <a class="" href="..">Home</a>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-sysadmin/">Linux Sysadmin</a>
+	    </li>
+          
             <li class="toctree-l1 current">
 		
     <a class="current" href="./">Linux Commands</a>
@@ -60,17 +65,94 @@
     <li class="toctree-l2"><a href="#find">Find</a></li>
     
 
+    <li class="toctree-l2"><a href="#listening-on-ports-traffic-network-connections">Listening on Ports, Traffic Network connections</a></li>
+    
+
+    <li class="toctree-l2"><a href="#hardware-info">Hardware info</a></li>
+    
+
+    <li class="toctree-l2"><a href="#clonedownload-a-website">Clone/Download a website</a></li>
+    
+
+    <li class="toctree-l2"><a href="#download-maps-from-csgo-web-server">Download maps from csgo web server</a></li>
+    
+
+    <li class="toctree-l2"><a href="#mount-windows-partition-that-is-in-hibernation-mode">Mount Windows Partition that is in hibernation mode</a></li>
+    
+
+    <li class="toctree-l2"><a href="#listing-user-logins-reboot-times-and-bad-login-attempts">Listing User Logins, reboot times and bad login attempts</a></li>
+    
+
+    <li class="toctree-l2"><a href="#commonnly-used">Commonnly used</a></li>
+    
+
+    <li class="toctree-l2"><a href="#compare-files-and-directories-content">Compare files and directories content</a></li>
+    
+
+    <li class="toctree-l2"><a href="#network-manager">Network manager</a></li>
+    
+
+    <li class="toctree-l2"><a href="#ufw">UFW</a></li>
+    
+
+    <li class="toctree-l2"><a href="#imagemagick-command-line-image-manipulation">ImageMagick - Command Line Image Manipulation</a></li>
+    
+
+    <li class="toctree-l2"><a href="#tmux-screen">TMUX &amp; screen</a></li>
+    
+
+    <li class="toctree-l2"><a href="#curl">Curl</a></li>
+    
+
+    <li class="toctree-l2"><a href="#dig">Dig</a></li>
+    
+
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../linux/">Linux</a>
+    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../about/about/">About</a>
+    <a class="" href="../mysql/">MySQL</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../apache/">Apache</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../docker/">Docker</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../git/">Git</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../vim/">Vim</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-desktop/">Linux Desktop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../macos/">MacOS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
 	    </li>
           
         </ul>
@@ -106,6 +188,7 @@
             <div class="section">
               
                 <h2 id="find">Find</h2>
+<p><strong>Find all matching files and replace with new file</strong></p>
 <pre><code class="bash">find ~/ -type f -iname &quot;gameme.smx&quot; | while read line
 do
   cp -v gameme.smx $line
@@ -116,6 +199,32 @@ done
 <pre><code class="bash">find . -type f -iname &quot;*.ini&quot; -exec chmod -x {} \;
 </code></pre>
 
+<p><strong>Find files and grep</strong></p>
+<pre><code class="bash">find ~/ -type f -name &quot;autoexec.cfg&quot; -exec cat {} | grep 'log_address' \;
+</code></pre>
+
+<p><strong>Find and replace text in multiple files</strong></p>
+<pre><code class="bash">sed -i 's/&quot;findtext&quot;/&quot;replacetext&quot;/g' *
+</code></pre>
+
+<p><strong>Find text and replace the entire line</strong></p>
+<pre><code class="bash">sed -i 's/&quot;^findtext.*&quot;/&quot;replacetext&quot;/g' *
+</code></pre>
+
+<p><strong>Delete a specific subfolder within all directories</strong></p>
+<pre><code class="bash">echo ~/john/*/csgo/csgo/ | xargs -n 1 rm -r 
+</code></pre>
+
+<p><strong>Copy a specific sub directory from all directories.</strong></p>
+<pre><code class="bash">echo ~/john/*/ | xargs -n 1 cp -R csgo/
+</code></pre>
+
+<p>The -i option of cp command means that you will be asked whether to overwrite a file</p>
+<p><strong>Find empty files and delete</strong></p>
+<pre><code>find /tmp -type f -empty -delete
+</code></pre>
+
+<h2 id="listening-on-ports-traffic-network-connections">Listening on Ports, Traffic Network connections</h2>
 <p><strong>Find port of runnin application</strong></p>
 <pre><code class="bash">netstat -lnp | grep ts3
 netstat -l -a -p -n  
@@ -124,6 +233,212 @@ netstat -l -a -p -n
 <p><strong>Find appliction listening on a port</strong></p>
 <pre><code class="bash">sudo lsof -i :80
 </code></pre>
+
+<p><strong>Monitor live Network connections and traffic</strong></p>
+<pre><code class="bash">sudo tcptrack -i eth0 -r 5 
+</code></pre>
+
+<h2 id="hardware-info">Hardware info</h2>
+<p><strong>All hardware info</strong></p>
+<pre><code class="bash">sudo lshw | less
+</code></pre>
+
+<p><strong>Motherbaord</strong></p>
+<pre><code class="bash">sudo lshw -c system
+</code></pre>
+
+<p><strong>Network</strong></p>
+<pre><code class="bash">sudo lshw -C network
+</code></pre>
+
+<p><strong>CPU</strong></p>
+<pre><code class="bash">sudo lscpu 
+</code></pre>
+
+<p><strong>PCI (GPU info here as well)</strong></p>
+<pre><code class="bash">sudo lspci 
+</code></pre>
+
+<p><strong>Memory</strong></p>
+<pre><code class="bash">free -h 
+</code></pre>
+
+<h2 id="clonedownload-a-website">Clone/Download a website</h2>
+<pre><code class="bash">wget --limit-rate=200k --no-clobber --convert-links --random-wait -r -p -E -e robots=off -U mozilla http://www.kossboss.com 
+</code></pre>
+
+<h2 id="download-maps-from-csgo-web-server">Download maps from csgo web server</h2>
+<pre><code class="bash">wget -r --no-parent --reject &quot;index.html*&quot;  http://fastdl.streamline-servers.com/fastdl/ThomasL/5623//maps/ |grep surf 
+</code></pre>
+
+<h2 id="mount-windows-partition-that-is-in-hibernation-mode">Mount Windows Partition that is in hibernation mode</h2>
+<pre><code class="bash">sudo ntfsfix /dev/sda3 
+sudo mount /dev/sda3 /mnt 
+</code></pre>
+
+<h2 id="listing-user-logins-reboot-times-and-bad-login-attempts">Listing User Logins, reboot times and bad login attempts</h2>
+<p><strong>Get the running processes of logged-in users</strong></p>
+<pre><code class="bash">w
+</code></pre>
+
+<p><strong>Display Logged in users</strong></p>
+<pre><code class="bash">users 
+
+who | cut -d' ' -f1 | sort | uniq
+</code></pre>
+
+<p><strong>Get all users login and logout history</strong></p>
+<pre><code class="bash">last 
+</code></pre>
+
+<p><strong>Get the users login history</strong></p>
+<pre><code class="bash">last [user] 
+</code></pre>
+
+<p><strong>Display bad login attempts</strong></p>
+<pre><code class="bash">last b 
+</code></pre>
+
+<p><strong>Display last reboot times</strong></p>
+<pre><code class="bash">last reboot | less 
+</code></pre>
+
+<h2 id="commonnly-used">Commonnly used</h2>
+<p><strong>Run a command every x seconds</strong></p>
+<pre><code class="bash">watch -n10 command args 
+</code></pre>
+
+<p><strong>Directory size disincluding sub directory info</strong></p>
+<pre><code class="bash">du -hs /path/to/directory 
+</code></pre>
+
+<p><strong>Find packages</strong></p>
+<pre><code class="bash">apt-cache search 
+</code></pre>
+
+<p><strong>Send mail</strong></p>
+<pre><code class="bash">echo &quot;test message&quot; | mailx -s 'test subject' john@domain.com  
+</code></pre>
+
+<p><strong>Number of files in dir</strong></p>
+<pre><code class="bash">ls | wc -l 
+</code></pre>
+
+<p><strong>Redirecting the standard error (stderr) and stdout to file</strong></p>
+<pre><code class="bash">command &gt; file 2&gt;&amp;1  
+</code></pre>
+
+<p><strong>Get External/Public IP address:</strong></p>
+<pre><code class="bash">curl ifconfig.me
+</code></pre>
+
+<p><strong>Find installed packages(Ubuntu)</strong></p>
+<pre><code class="bash">dpkg -l | grep php 
+</code></pre>
+
+<p><strong>Update a single package using the CLI (Ubuntu)</strong></p>
+<pre><code class="bash">sudo apt-get --only-upgrade install &lt;packagename&gt; 
+</code></pre>
+
+<h2 id="compare-files-and-directories-content">Compare files and directories content</h2>
+<pre><code class="bash">diff file1 file2
+diff /root/dir1/ /root/dir2/
+</code></pre>
+
+<p><strong>Compare file content with visual output</code></strong></p>
+<pre><code class="bash">sdiff file1 file2
+</code></pre>
+
+<h2 id="network-manager">Network manager</h2>
+<p><strong>View IP settings</strong></p>
+<pre><code class="bash">sudo service network-manager start 
+</code></pre>
+
+<p>Ubuntu 14.04</p>
+<pre><code class="bash">nmcli dev list iface eth0 
+</code></pre>
+
+<p>For newer versions, you can use this:</p>
+<pre><code class="bash">nmcli dev show eth0 
+</code></pre>
+
+<h2 id="ufw">UFW</h2>
+<p><strong>Find port and protocal</strong></p>
+<pre><code class="bash">ufw status numbered |(grep '80/tcp'|awk -F&quot;[][]&quot; '{print $2}')
+</code></pre>
+
+<p><strong>Delete port</strong></p>
+<pre><code class="bash">ufw delete $(ufw status numbered |(grep '80/tcp'|awk -F&quot;[][]&quot; '{print $2}'))
+</code></pre>
+
+<p><strong>Delete firewall rules on cli and auto select yes</strong></p>
+<pre><code class="bash">yes | for i in {50..3}; do sudo ufw delete $i; done
+</code></pre>
+
+<h2 id="imagemagick-command-line-image-manipulation">ImageMagick - Command Line Image Manipulation</h2>
+<p><strong>Installation</strong></p>
+<pre><code class="bash">sudo apt-get install imagemagick 
+sudo yum -y install ImageMagick 
+</code></pre>
+
+<p><strong>Converting Between Formats</strong></p>
+<pre><code class="bash">convert howtogeek.png howtogeek.jpg 
+</code></pre>
+
+<p><strong>Resize Images</strong></p>
+<pre><code class="bash">convert example.png -resize 200×100 example.png
+</code></pre>
+
+<p><strong>Resize Images &amp; Preserve aspect ratio</strong></p>
+<pre><code class="bash">convert example.png -resize 200×100! example.png 
+</code></pre>
+
+<p><strong>Rotate Image</strong></p>
+<pre><code class="bash">convert howtogeek.jpg -rotate 90 howtogeek-rotated.jpg 
+</code></pre>
+
+<p><strong>Converting Between Formats &amp; Changing quality</strong></p>
+<pre><code class="bash">convert howtogeek.png -quality 95 howtogeek.jpg 
+</code></pre>
+
+<p>The Last example shows you that you can combined operations.</p>
+<h2 id="tmux-screen">TMUX &amp; screen</h2>
+<p><strong>Start new with session name</strong></p>
+<pre><code class="bash">tmux new -s myname
+</code></pre>
+
+<p><strong>Attach</strong></p>
+<pre><code class="bash">tmux a tmuxname
+</code></pre>
+
+<p><strong>Attach to named</strong></p>
+<pre><code class="bash">tmux a -t myname
+</code></pre>
+
+<p><strong>List sessions</strong></p>
+<pre><code class="bash">tmux ls
+</code></pre>
+
+<p><strong>Kill session</strong></p>
+<pre><code class="bash">tmux kill-session -t myname
+</code></pre>
+
+<p><strong>Inject a command to a detached screen</strong></p>
+<pre><code class="bash">screen -p 0 -X stuff $'bot_kill\n'
+</code></pre>
+
+<h2 id="curl">Curl</h2>
+<p><strong>Get Response code</strong></p>
+<pre><code class="bash">curl -sI https://$SITE | head -1
+</code></pre>
+
+<h2 id="dig">Dig</h2>
+<p><strong>Reverse DNS lookup</strong> </p>
+<pre><code class="bash">dig +noall +answer -x 199.232.99.199
+</code></pre>
+
+<p><code>-x</code>Reverse DNS lookup <br />
+<code>+noall</code> and <code>+answer</code> makes output pretty</p>
               
             </div>
           </div>
@@ -131,10 +446,10 @@ netstat -l -a -p -n
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../linux/" class="btn btn-neutral float-right" title="Linux">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../string-manipulation/" class="btn btn-neutral float-right" title="Text (awk sed grep etc )">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../linux-sysadmin/" class="btn btn-neutral" title="Linux Sysadmin"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -160,10 +475,10 @@ netstat -l -a -p -n
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../linux-sysadmin/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../linux/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../string-manipulation/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

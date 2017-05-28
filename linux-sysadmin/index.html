@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Linux Sysadmin - Grovelab</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Linux Sysadmin";
+    var mkdocs_page_input_path = "linux-sysadmin.md";
+    var mkdocs_page_url = "/linux-sysadmin/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Grovelab</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Linux Sysadmin</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#checking-logs-iptables-apache-wordpress-logins">Checking logs, IpTables, Apache, Wordpress logins</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#backup-all-changed-config-files">Backup all changed config files</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#remove-sudo-password-prompt">Remove sudo password prompt</a></li>
+    
+
+    <li class="toctree-l2"><a href="#ssh-key-based-authentication-and-create-config">SSH Key Based Authentication and Create Config</a></li>
+    
+
+    <li class="toctree-l2"><a href="#automatically-start-script-on-reboot">Automatically Start script on reboot</a></li>
+    
+
+    <li class="toctree-l2"><a href="#delete-clean-cache-to-free-up-memory">Delete clean cache to free up memory</a></li>
+    
+
+    <li class="toctree-l2"><a href="#wikimedia-php-mail-function">WikiMedia PHP mail function</a></li>
+    
+
+    <li class="toctree-l2"><a href="#ufw-disable-ipv6-rules">UFW Disable IPv6 rules</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-commands/">Linux Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../mysql/">MySQL</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../apache/">Apache</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../docker/">Docker</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../git/">Git</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../vim/">Vim</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-desktop/">Linux Desktop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../macos/">MacOS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Grovelab</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Linux Sysadmin</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="checking-logs-iptables-apache-wordpress-logins">Checking logs, IpTables, Apache, Wordpress logins</h2>
+<p><strong>Look at top IP addresses in your access log use:</strong></p>
+<pre><code class="bash">tail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more 
+</code></pre>
+
+<p><strong>If nothing looks suspicious in IP the list, use this query to check top hit URLs on your box:</strong></p>
+<pre><code class="bash">cut -f 2 -d '&quot;' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more 
+</code></pre>
+
+<p><strong>Check for common user agents :</strong> </p>
+<pre><code class="bash">cut -f 4 -d '&quot;' access.log|sort|uniq -c|sort -nr|more 
+</code></pre>
+
+<p><strong>Get IP's of established connections</strong></p>
+<pre><code class="bash">netstat -an|grep ESTABLISHED|awk '{print $5}'|awk -F: '{print $1}'|sort|uniq -c|awk '{ printf(&quot;%s\t%s\t&quot;,$2,$1); for (i = 0; i &lt; $1; i++) {printf(&quot;*&quot;)}; print &quot;&quot;}' 
+</code></pre>
+
+<p><strong>View Apache requests per day</strong></p>
+<pre><code class="bash">cd /var/log/apache2 
+awk '{print $4}' access.log | cut -d: -f1 | uniq -c 
+</code></pre>
+
+<p><strong>View Apache requests per hour</strong></p>
+<pre><code class="bash">cd /var/log/apache2 
+grep &quot;29/Feb&quot; access.log | cut -d[ -f2 | cut -d] -f1 | awk -F: '{print $2&quot;:00&quot;}' | sort -n | uniq -c 
+</code></pre>
+
+<p><strong>View Apache requests per minute</strong></p>
+<pre><code class="bash">cd /var/log/apache2 
+grep &quot;29/Feb/2016:06&quot; access.log | cut -d[ -f2 | cut -d] -f1 | awk -F: '{print $2&quot;:&quot;$3}' | sort -nk1 -nk2 | uniq -c | awk '{ if ($1 &gt; 10) print $0}' 
+</code></pre>
+
+<p><strong>View WordPress login and hacking attempts</strong></p>
+<pre><code class="bash">egrep &quot;POST .*wp-login.php&quot; access.log | awk '{print $1,$4,$5,$6,$7,substr($0, index($0,$12))}' | awk '{print $1}' | sort -n | uniq -c | sort -n | sed 's/[ ]*//' 
+egrep &quot;POST .*xmlrpc.php&quot; access.log | awk '{print $1,$4,$5,$6,$7,substr($0, index($0,$12))}' | awk '{print $1}' | sort -n | uniq -c | sort -n | sed 's/[ ]*//' 
+</code></pre>
+
+<p><strong>Number of failed ssh login attempts</strong></p>
+<pre><code class="bash">zcat /var/log/auth.log* | grep 'Failed password' | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c 
+</code></pre>
+
+<p><strong>DDos mitigation by limiting connections</strong></p>
+<pre><code class="bash">iptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100 -j ACCEPT 
+</code></pre>
+
+<p><code>-m limit</code> This uses the limit iptables extension.  <br />
+<code>--limit 25/minute</code> This limits only maximum of 25 connection per minute. Change this value based on your specific requirement. <br />
+<code>--limit-burst 100</code> This value indicates that the limit/minute will be enforced only after the total number of connection have reached the limit-burst level.   </p>
+<p><strong>Block an IP on iptables:</strong></p>
+<pre><code class="bash">iptables -A INPUT -s &lt;IPADRESS&gt; -j DROP/REJECT  
+</code></pre>
+
+<p>Example</p>
+<pre><code class="bash">iptables -A INPUT -s 192.168.1.1 -j DROP/REJECT 
+</code></pre>
+
+<p><strong>Save and Restart</strong></p>
+<pre><code class="bash">service iptables restart 
+service iptables save 
+sudo service apache2 restart  
+</code></pre>
+
+<h3 id="backup-all-changed-config-files">Backup all changed config files</h3>
+<pre><code class="bash">debsums -ce | tar --files-from=- -cf configs.tar 
+</code></pre>
+
+<h2 id="remove-sudo-password-prompt">Remove sudo password prompt</h2>
+<p><strong>Open sudoers config file</strong></p>
+<pre><code class="bash">sudo visudo 
+</code></pre>
+
+<p><strong>Edit or Add the group the user is apart of. All users in this group passwords will be removed</strong></p>
+<pre><code class="bash">%sudo ALL=(ALL) NOPASSWD: ALL 
+</code></pre>
+
+<h2 id="ssh-key-based-authentication-and-create-config">SSH Key Based Authentication and Create Config</h2>
+<p><strong>Generate ssh key</strong><br />
+<s><code>ssh-keygen -C "your_email@example.com"</code></s></p>
+<p><strong>Generate secure ssh key</strong></p>
+<pre><code class="bash">ssh-keygen -o -a 100 -t ed25519 -C &quot;your_email@example.com&quot;
+</code></pre>
+
+<p><code>-C</code> Comment - Use any identifier: name/username/email/etc</p>
+<p><strong>Copy SSH key from pc to server</strong></p>
+<pre><code class="bash">ssh-copy-id username@remote_host 
+</code></pre>
+
+<p><strong>Create config for a quick way to connect via ssh</strong></p>
+<pre><code class="bash">vi /home/john/.ssh/config 
+
+Host iandi
+HostName iandi.co.za
+User john
+IdentityFile /home/john/.ssh/iandi 
+</code></pre>
+
+<p><strong>Your config file you just created will allow you to connect via SSH much faster</strong></p>
+<pre><code class="bash">ssh iandi 
+</code></pre>
+
+<h2 id="automatically-start-script-on-reboot">Automatically Start script on reboot</h2>
+<p><strong>Create script</strong></p>
+<pre><code class="bash">sudo vi /etc/init.d/script.sh 
+sudo chmod 755 /etc/init.d/script.sh
+</code></pre>
+
+<p><strong>Set script to start automatically on boot with</strong>
+Centos</p>
+<pre><code class="bash">sudo chkconfig --add script.sh 
+</code></pre>
+
+<p><strong>Enable script on run levels</strong></p>
+<pre><code class="bash">sudo chkconfig --level 2345 script.sh on 
+</code></pre>
+
+<p><strong>Check the script is indeed enabled - you should see "on" for the levels you selected.</strong></p>
+<pre><code class="bash">sudo chkconfig --list | grep script.sh 
+</code></pre>
+
+<p><strong>Remove script from startup chkconfig --del script.sh</strong>
+Ubuntu</p>
+<pre><code class="bash">sudo update-rc.d script.sh defaults 
+</code></pre>
+
+<p>Remove script from startup</p>
+<pre><code class="bash">update-rc.d -f script.sh remove 
+</code></pre>
+
+<p>Check the script is indeed enabled</p>
+<pre><code class="bash">service --status-all 
+</code></pre>
+
+<p><code>[ + ]</code> Services with this sign are currently running.<br />
+<code>[ – ]</code> Services with this sign are not currently running. <br />
+<code>[ ? ]</code> Services that do not have a status switch. </p>
+<h2 id="delete-clean-cache-to-free-up-memory">Delete clean cache to free up memory</h2>
+<p>Writing to this will cause the kernel to drop clean caches, as well as reclaimable slab objects like dentries and inodes. Once dropped, their memory becomes free.</p>
+<p>To free pagecache:</p>
+<pre><code class="bash">sync;echo 1 &gt; /proc/sys/vm/drop_caches
+</code></pre>
+
+<p>To free reclaimable slab objects (includes dentries and inodes):</p>
+<pre><code class="bash">sync;echo 2 &gt; /proc/sys/vm/drop_caches
+</code></pre>
+
+<p>To free slab objects and pagecache:</p>
+<pre><code class="bash">sync;echo 3 &gt; /proc/sys/vm/drop_caches
+</code></pre>
+
+<p>This is a non-destructive operation and will not free any dirty objects. Use of this file can cause performance problems. Since it discards cached objects, it may cost a significant amount of I/O and CPU to recreate the dropped objects, especially if they were under heavy use.</p>
+<p>“sync” only makes dirty cache to clean cache. cache is still preserved. drop_caches doesn’t touch dirty caches and only drops clean caches. So to make all memory free, it is necessary to do sync first before drop_caches in case flushing daemons hasn’t written the changes to disk.</p>
+<h2 id="wikimedia-php-mail-function">WikiMedia PHP mail function</h2>
+<pre><code class="bash">sudo apt-get install sendmail 
+sudo sendmailconfig 
+</code></pre>
+
+<h2 id="ufw-disable-ipv6-rules">UFW Disable IPv6 rules</h2>
+<pre><code class="bash">sudo vim /etc/default/ufw 
+IPV6=no 
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux-commands/" class="btn btn-neutral float-right" title="Linux Commands">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../linux-commands/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

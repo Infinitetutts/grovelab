@@ -16,34 +16,179 @@
             "title": "Commands"
         },
         {
-            "location": "/linux-commands/",
-            "text": "Find\n\n\nfind ~/ -type f -iname \"gameme.smx\" | while read line\ndo\n  cp -v gameme.smx $line\ndone\n\n\n\n\nFind and remove permissions\n\n\nfind . -type f -iname \"*.ini\" -exec chmod -x {} \\;\n\n\n\n\nFind port of runnin application\n\n\nnetstat -lnp | grep ts3\nnetstat -l -a -p -n  \n\n\n\n\nFind appliction listening on a port\n\n\nsudo lsof -i :80",
-            "title": "Linux Commands"
+            "location": "/linux-sysadmin/",
+            "text": "Checking logs, IpTables, Apache, Wordpress logins\n\n\nLook at top IP addresses in your access log use:\n\n\ntail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more \n\n\n\n\nIf nothing looks suspicious in IP the list, use this query to check top hit URLs on your box:\n\n\ncut -f 2 -d '\"' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more \n\n\n\n\nCheck for common user agents :\n \n\n\ncut -f 4 -d '\"' access.log|sort|uniq -c|sort -nr|more \n\n\n\n\nGet IP's of established connections\n\n\nnetstat -an|grep ESTABLISHED|awk '{print $5}'|awk -F: '{print $1}'|sort|uniq -c|awk '{ printf(\"%s\\t%s\\t\",$2,$1); for (i = 0; i < $1; i++) {printf(\"*\")}; print \"\"}' \n\n\n\n\nView Apache requests per day\n\n\ncd /var/log/apache2 \nawk '{print $4}' access.log | cut -d: -f1 | uniq -c \n\n\n\n\nView Apache requests per hour\n\n\ncd /var/log/apache2 \ngrep \"29/Feb\" access.log | cut -d[ -f2 | cut -d] -f1 | awk -F: '{print $2\":00\"}' | sort -n | uniq -c \n\n\n\n\nView Apache requests per minute\n\n\ncd /var/log/apache2 \ngrep \"29/Feb/2016:06\" access.log | cut -d[ -f2 | cut -d] -f1 | awk -F: '{print $2\":\"$3}' | sort -nk1 -nk2 | uniq -c | awk '{ if ($1 > 10) print $0}' \n\n\n\n\nView WordPress login and hacking attempts\n\n\negrep \"POST .*wp-login.php\" access.log | awk '{print $1,$4,$5,$6,$7,substr($0, index($0,$12))}' | awk '{print $1}' | sort -n | uniq -c | sort -n | sed 's/[ ]*//' \negrep \"POST .*xmlrpc.php\" access.log | awk '{print $1,$4,$5,$6,$7,substr($0, index($0,$12))}' | awk '{print $1}' | sort -n | uniq -c | sort -n | sed 's/[ ]*//' \n\n\n\n\nNumber of failed ssh login attempts\n\n\nzcat /var/log/auth.log* | grep 'Failed password' | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c \n\n\n\n\nDDos mitigation by limiting connections\n\n\niptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100 -j ACCEPT \n\n\n\n\n-m limit\n This uses the limit iptables extension.  \n\n\n--limit 25/minute\n This limits only maximum of 25 connection per minute. Change this value based on your specific requirement. \n\n\n--limit-burst 100\n This value indicates that the limit/minute will be enforced only after the total number of connection have reached the limit-burst level.   \n\n\nBlock an IP on iptables:\n\n\niptables -A INPUT -s <IPADRESS> -j DROP/REJECT  \n\n\n\n\nExample\n\n\niptables -A INPUT -s 192.168.1.1 -j DROP/REJECT \n\n\n\n\nSave and Restart\n\n\nservice iptables restart \nservice iptables save \nsudo service apache2 restart  \n\n\n\n\nBackup all changed config files\n\n\ndebsums -ce | tar --files-from=- -cf configs.tar \n\n\n\n\nRemove sudo password prompt\n\n\nOpen sudoers config file\n\n\nsudo visudo \n\n\n\n\nEdit or Add the group the user is apart of. All users in this group passwords will be removed\n\n\n%sudo ALL=(ALL) NOPASSWD: ALL \n\n\n\n\nSSH Key Based Authentication and Create Config\n\n\nGenerate ssh key\n\n\nssh-keygen -C \"your_email@example.com\"\n\n\nGenerate secure ssh key\n\n\nssh-keygen -o -a 100 -t ed25519 -C \"your_email@example.com\"\n\n\n\n\n-C\n Comment - Use any identifier: name/username/email/etc\n\n\nCopy SSH key from pc to server\n\n\nssh-copy-id username@remote_host \n\n\n\n\nCreate config for a quick way to connect via ssh\n\n\nvi /home/john/.ssh/config \n\nHost iandi\nHostName iandi.co.za\nUser john\nIdentityFile /home/john/.ssh/iandi \n\n\n\n\nYour config file you just created will allow you to connect via SSH much faster\n\n\nssh iandi \n\n\n\n\nAutomatically Start script on reboot\n\n\nCreate script\n\n\nsudo vi /etc/init.d/script.sh \nsudo chmod 755 /etc/init.d/script.sh\n\n\n\n\nSet script to start automatically on boot with\n\nCentos\n\n\nsudo chkconfig --add script.sh \n\n\n\n\nEnable script on run levels\n\n\nsudo chkconfig --level 2345 script.sh on \n\n\n\n\nCheck the script is indeed enabled - you should see \"on\" for the levels you selected.\n\n\nsudo chkconfig --list | grep script.sh \n\n\n\n\nRemove script from startup chkconfig --del script.sh\n\nUbuntu\n\n\nsudo update-rc.d script.sh defaults \n\n\n\n\nRemove script from startup\n\n\nupdate-rc.d -f script.sh remove \n\n\n\n\nCheck the script is indeed enabled\n\n\nservice --status-all \n\n\n\n\n[ + ]\n Services with this sign are currently running.\n\n\n[ \u2013 ]\n Services with this sign are not currently running. \n\n\n[ ? ]\n Services that do not have a status switch. \n\n\nDelete clean cache to free up memory\n\n\nWriting to this will cause the kernel to drop clean caches, as well as reclaimable slab objects like dentries and inodes. Once dropped, their memory becomes free.\n\n\nTo free pagecache:\n\n\nsync;echo 1 > /proc/sys/vm/drop_caches\n\n\n\n\nTo free reclaimable slab objects (includes dentries and inodes):\n\n\nsync;echo 2 > /proc/sys/vm/drop_caches\n\n\n\n\nTo free slab objects and pagecache:\n\n\nsync;echo 3 > /proc/sys/vm/drop_caches\n\n\n\n\nThis is a non-destructive operation and will not free any dirty objects. Use of this file can cause performance problems. Since it discards cached objects, it may cost a significant amount of I/O and CPU to recreate the dropped objects, especially if they were under heavy use.\n\n\n\u201csync\u201d only makes dirty cache to clean cache. cache is still preserved. drop_caches doesn\u2019t touch dirty caches and only drops clean caches. So to make all memory free, it is necessary to do sync first before drop_caches in case flushing daemons hasn\u2019t written the changes to disk.\n\n\nWikiMedia PHP mail function\n\n\nsudo apt-get install sendmail \nsudo sendmailconfig \n\n\n\n\nUFW Disable IPv6 rules\n\n\nsudo vim /etc/default/ufw \nIPV6=no",
+            "title": "Linux Sysadmin"
         },
         {
-            "location": "/linux-commands/#find",
-            "text": "find ~/ -type f -iname \"gameme.smx\" | while read line\ndo\n  cp -v gameme.smx $line\ndone  Find and remove permissions  find . -type f -iname \"*.ini\" -exec chmod -x {} \\;  Find port of runnin application  netstat -lnp | grep ts3\nnetstat -l -a -p -n    Find appliction listening on a port  sudo lsof -i :80",
-            "title": "Find"
-        },
-        {
-            "location": "/linux/",
-            "text": "Checking logs, IpTables, Apache, Wordpress logins\n\n\nLook at top IP addresses in your access log use:\n\n\ntail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more \n\n\n\n\nIf nothing looks suspicious in IP list, use this query to check top hit URLs on your box:\n\n\ncut -f 2 -d '\"' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more \n\n\n\n\nCheck for common user agents :\n \n\n\ncut -f 4 -d '\"' access.log|sort|uniq -c|sort -nr|more \n\n\n\n\nBackup all changed config files\n\n\ndebsums -ce | tar --files-from=- -cf configs.tar",
-            "title": "Linux"
-        },
-        {
-            "location": "/linux/#checking-logs-iptables-apache-wordpress-logins",
-            "text": "Look at top IP addresses in your access log use:  tail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more   If nothing looks suspicious in IP list, use this query to check top hit URLs on your box:  cut -f 2 -d '\"' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more   Check for common user agents :    cut -f 4 -d '\"' access.log|sort|uniq -c|sort -nr|more",
+            "location": "/linux-sysadmin/#checking-logs-iptables-apache-wordpress-logins",
+            "text": "Look at top IP addresses in your access log use:  tail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more   If nothing looks suspicious in IP the list, use this query to check top hit URLs on your box:  cut -f 2 -d '\"' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more   Check for common user agents :    cut -f 4 -d '\"' access.log|sort|uniq -c|sort -nr|more   Get IP's of established connections  netstat -an|grep ESTABLISHED|awk '{print $5}'|awk -F: '{print $1}'|sort|uniq -c|awk '{ printf(\"%s\\t%s\\t\",$2,$1); for (i = 0; i < $1; i++) {printf(\"*\")}; print \"\"}'   View Apache requests per day  cd /var/log/apache2 \nawk '{print $4}' access.log | cut -d: -f1 | uniq -c   View Apache requests per hour  cd /var/log/apache2 \ngrep \"29/Feb\" access.log | cut -d[ -f2 | cut -d] -f1 | awk -F: '{print $2\":00\"}' | sort -n | uniq -c   View Apache requests per minute  cd /var/log/apache2 \ngrep \"29/Feb/2016:06\" access.log | cut -d[ -f2 | cut -d] -f1 | awk -F: '{print $2\":\"$3}' | sort -nk1 -nk2 | uniq -c | awk '{ if ($1 > 10) print $0}'   View WordPress login and hacking attempts  egrep \"POST .*wp-login.php\" access.log | awk '{print $1,$4,$5,$6,$7,substr($0, index($0,$12))}' | awk '{print $1}' | sort -n | uniq -c | sort -n | sed 's/[ ]*//' \negrep \"POST .*xmlrpc.php\" access.log | awk '{print $1,$4,$5,$6,$7,substr($0, index($0,$12))}' | awk '{print $1}' | sort -n | uniq -c | sort -n | sed 's/[ ]*//'   Number of failed ssh login attempts  zcat /var/log/auth.log* | grep 'Failed password' | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c   DDos mitigation by limiting connections  iptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100 -j ACCEPT   -m limit  This uses the limit iptables extension.    --limit 25/minute  This limits only maximum of 25 connection per minute. Change this value based on your specific requirement.   --limit-burst 100  This value indicates that the limit/minute will be enforced only after the total number of connection have reached the limit-burst level.     Block an IP on iptables:  iptables -A INPUT -s <IPADRESS> -j DROP/REJECT    Example  iptables -A INPUT -s 192.168.1.1 -j DROP/REJECT   Save and Restart  service iptables restart \nservice iptables save \nsudo service apache2 restart",
             "title": "Checking logs, IpTables, Apache, Wordpress logins"
         },
         {
-            "location": "/linux/#backup-all-changed-config-files",
+            "location": "/linux-sysadmin/#backup-all-changed-config-files",
             "text": "debsums -ce | tar --files-from=- -cf configs.tar",
             "title": "Backup all changed config files"
         },
         {
-            "location": "/about/about/",
-            "text": "Grovelab is the wiki for DevOps and Linux SysAdmins",
-            "title": "About"
+            "location": "/linux-sysadmin/#remove-sudo-password-prompt",
+            "text": "Open sudoers config file  sudo visudo   Edit or Add the group the user is apart of. All users in this group passwords will be removed  %sudo ALL=(ALL) NOPASSWD: ALL",
+            "title": "Remove sudo password prompt"
+        },
+        {
+            "location": "/linux-sysadmin/#ssh-key-based-authentication-and-create-config",
+            "text": "Generate ssh key  ssh-keygen -C \"your_email@example.com\"  Generate secure ssh key  ssh-keygen -o -a 100 -t ed25519 -C \"your_email@example.com\"  -C  Comment - Use any identifier: name/username/email/etc  Copy SSH key from pc to server  ssh-copy-id username@remote_host   Create config for a quick way to connect via ssh  vi /home/john/.ssh/config \n\nHost iandi\nHostName iandi.co.za\nUser john\nIdentityFile /home/john/.ssh/iandi   Your config file you just created will allow you to connect via SSH much faster  ssh iandi",
+            "title": "SSH Key Based Authentication and Create Config"
+        },
+        {
+            "location": "/linux-sysadmin/#automatically-start-script-on-reboot",
+            "text": "Create script  sudo vi /etc/init.d/script.sh \nsudo chmod 755 /etc/init.d/script.sh  Set script to start automatically on boot with \nCentos  sudo chkconfig --add script.sh   Enable script on run levels  sudo chkconfig --level 2345 script.sh on   Check the script is indeed enabled - you should see \"on\" for the levels you selected.  sudo chkconfig --list | grep script.sh   Remove script from startup chkconfig --del script.sh \nUbuntu  sudo update-rc.d script.sh defaults   Remove script from startup  update-rc.d -f script.sh remove   Check the script is indeed enabled  service --status-all   [ + ]  Services with this sign are currently running.  [ \u2013 ]  Services with this sign are not currently running.   [ ? ]  Services that do not have a status switch.",
+            "title": "Automatically Start script on reboot"
+        },
+        {
+            "location": "/linux-sysadmin/#delete-clean-cache-to-free-up-memory",
+            "text": "Writing to this will cause the kernel to drop clean caches, as well as reclaimable slab objects like dentries and inodes. Once dropped, their memory becomes free.  To free pagecache:  sync;echo 1 > /proc/sys/vm/drop_caches  To free reclaimable slab objects (includes dentries and inodes):  sync;echo 2 > /proc/sys/vm/drop_caches  To free slab objects and pagecache:  sync;echo 3 > /proc/sys/vm/drop_caches  This is a non-destructive operation and will not free any dirty objects. Use of this file can cause performance problems. Since it discards cached objects, it may cost a significant amount of I/O and CPU to recreate the dropped objects, especially if they were under heavy use.  \u201csync\u201d only makes dirty cache to clean cache. cache is still preserved. drop_caches doesn\u2019t touch dirty caches and only drops clean caches. So to make all memory free, it is necessary to do sync first before drop_caches in case flushing daemons hasn\u2019t written the changes to disk.",
+            "title": "Delete clean cache to free up memory"
+        },
+        {
+            "location": "/linux-sysadmin/#wikimedia-php-mail-function",
+            "text": "sudo apt-get install sendmail \nsudo sendmailconfig",
+            "title": "WikiMedia PHP mail function"
+        },
+        {
+            "location": "/linux-sysadmin/#ufw-disable-ipv6-rules",
+            "text": "sudo vim /etc/default/ufw \nIPV6=no",
+            "title": "UFW Disable IPv6 rules"
+        },
+        {
+            "location": "/linux-commands/",
+            "text": "Find\n\n\nFind all matching files and replace with new file\n\n\nfind ~/ -type f -iname \"gameme.smx\" | while read line\ndo\n  cp -v gameme.smx $line\ndone\n\n\n\n\nFind and remove permissions\n\n\nfind . -type f -iname \"*.ini\" -exec chmod -x {} \\;\n\n\n\n\nFind files and grep\n\n\nfind ~/ -type f -name \"autoexec.cfg\" -exec cat {} | grep 'log_address' \\;\n\n\n\n\nFind and replace text in multiple files\n\n\nsed -i 's/\"findtext\"/\"replacetext\"/g' *\n\n\n\n\nFind text and replace the entire line\n\n\nsed -i 's/\"^findtext.*\"/\"replacetext\"/g' *\n\n\n\n\nDelete a specific subfolder within all directories\n\n\necho ~/john/*/csgo/csgo/ | xargs -n 1 rm -r \n\n\n\n\nCopy a specific sub directory from all directories.\n\n\necho ~/john/*/ | xargs -n 1 cp -R csgo/\n\n\n\n\nThe -i option of cp command means that you will be asked whether to overwrite a file\n\n\nFind empty files and delete\n\n\nfind /tmp -type f -empty -delete\n\n\n\n\nListening on Ports, Traffic Network connections\n\n\nFind port of runnin application\n\n\nnetstat -lnp | grep ts3\nnetstat -l -a -p -n  \n\n\n\n\nFind appliction listening on a port\n\n\nsudo lsof -i :80\n\n\n\n\nMonitor live Network connections and traffic\n\n\nsudo tcptrack -i eth0 -r 5 \n\n\n\n\nHardware info\n\n\nAll hardware info\n\n\nsudo lshw | less\n\n\n\n\nMotherbaord\n\n\nsudo lshw -c system\n\n\n\n\nNetwork\n\n\nsudo lshw -C network\n\n\n\n\nCPU\n\n\nsudo lscpu \n\n\n\n\nPCI (GPU info here as well)\n\n\nsudo lspci \n\n\n\n\nMemory\n\n\nfree -h \n\n\n\n\nClone/Download a website\n\n\nwget --limit-rate=200k --no-clobber --convert-links --random-wait -r -p -E -e robots=off -U mozilla http://www.kossboss.com \n\n\n\n\nDownload maps from csgo web server\n\n\nwget -r --no-parent --reject \"index.html*\"  http://fastdl.streamline-servers.com/fastdl/ThomasL/5623//maps/ |grep surf \n\n\n\n\nMount Windows Partition that is in hibernation mode\n\n\nsudo ntfsfix /dev/sda3 \nsudo mount /dev/sda3 /mnt \n\n\n\n\nListing User Logins, reboot times and bad login attempts\n\n\nGet the running processes of logged-in users\n\n\nw\n\n\n\n\nDisplay Logged in users\n\n\nusers \n\nwho | cut -d' ' -f1 | sort | uniq\n\n\n\n\nGet all users login and logout history\n\n\nlast \n\n\n\n\nGet the users login history\n\n\nlast [user] \n\n\n\n\nDisplay bad login attempts\n\n\nlast b \n\n\n\n\nDisplay last reboot times\n\n\nlast reboot | less \n\n\n\n\nCommonnly used\n\n\nRun a command every x seconds\n\n\nwatch -n10 command args \n\n\n\n\nDirectory size disincluding sub directory info\n\n\ndu -hs /path/to/directory \n\n\n\n\nFind packages\n\n\napt-cache search \n\n\n\n\nSend mail\n\n\necho \"test message\" | mailx -s 'test subject' john@domain.com  \n\n\n\n\nNumber of files in dir\n\n\nls | wc -l \n\n\n\n\nRedirecting the standard error (stderr) and stdout to file\n\n\ncommand > file 2>&1  \n\n\n\n\nGet External/Public IP address:\n\n\ncurl ifconfig.me\n\n\n\n\nFind installed packages(Ubuntu)\n\n\ndpkg -l | grep php \n\n\n\n\nUpdate a single package using the CLI (Ubuntu)\n\n\nsudo apt-get --only-upgrade install <packagename> \n\n\n\n\nCompare files and directories content\n\n\ndiff file1 file2\ndiff /root/dir1/ /root/dir2/\n\n\n\n\nCompare file content with visual output\n\n\nsdiff file1 file2\n\n\n\n\nNetwork manager\n\n\nView IP settings\n\n\nsudo service network-manager start \n\n\n\n\nUbuntu 14.04\n\n\nnmcli dev list iface eth0 \n\n\n\n\nFor newer versions, you can use this:\n\n\nnmcli dev show eth0 \n\n\n\n\nUFW\n\n\nFind port and protocal\n\n\nufw status numbered |(grep '80/tcp'|awk -F\"[][]\" '{print $2}')\n\n\n\n\nDelete port\n\n\nufw delete $(ufw status numbered |(grep '80/tcp'|awk -F\"[][]\" '{print $2}'))\n\n\n\n\nDelete firewall rules on cli and auto select yes\n\n\nyes | for i in {50..3}; do sudo ufw delete $i; done\n\n\n\n\nImageMagick - Command Line Image Manipulation\n\n\nInstallation\n\n\nsudo apt-get install imagemagick \nsudo yum -y install ImageMagick \n\n\n\n\nConverting Between Formats\n\n\nconvert howtogeek.png howtogeek.jpg \n\n\n\n\nResize Images\n\n\nconvert example.png -resize 200\u00d7100 example.png\n\n\n\n\nResize Images & Preserve aspect ratio\n\n\nconvert example.png -resize 200\u00d7100! example.png \n\n\n\n\nRotate Image\n\n\nconvert howtogeek.jpg -rotate 90 howtogeek-rotated.jpg \n\n\n\n\nConverting Between Formats & Changing quality\n\n\nconvert howtogeek.png -quality 95 howtogeek.jpg \n\n\n\n\nThe Last example shows you that you can combined operations.\n\n\nTMUX & screen\n\n\nStart new with session name\n\n\ntmux new -s myname\n\n\n\n\nAttach\n\n\ntmux a tmuxname\n\n\n\n\nAttach to named\n\n\ntmux a -t myname\n\n\n\n\nList sessions\n\n\ntmux ls\n\n\n\n\nKill session\n\n\ntmux kill-session -t myname\n\n\n\n\nInject a command to a detached screen\n\n\nscreen -p 0 -X stuff $'bot_kill\\n'\n\n\n\n\nCurl\n\n\nGet Response code\n\n\ncurl -sI https://$SITE | head -1\n\n\n\n\nDig\n\n\nReverse DNS lookup\n \n\n\ndig +noall +answer -x 199.232.99.199\n\n\n\n\n-x\nReverse DNS lookup \n\n\n+noall\n and \n+answer\n makes output pretty",
+            "title": "Linux Commands"
+        },
+        {
+            "location": "/linux-commands/#find",
+            "text": "Find all matching files and replace with new file  find ~/ -type f -iname \"gameme.smx\" | while read line\ndo\n  cp -v gameme.smx $line\ndone  Find and remove permissions  find . -type f -iname \"*.ini\" -exec chmod -x {} \\;  Find files and grep  find ~/ -type f -name \"autoexec.cfg\" -exec cat {} | grep 'log_address' \\;  Find and replace text in multiple files  sed -i 's/\"findtext\"/\"replacetext\"/g' *  Find text and replace the entire line  sed -i 's/\"^findtext.*\"/\"replacetext\"/g' *  Delete a specific subfolder within all directories  echo ~/john/*/csgo/csgo/ | xargs -n 1 rm -r   Copy a specific sub directory from all directories.  echo ~/john/*/ | xargs -n 1 cp -R csgo/  The -i option of cp command means that you will be asked whether to overwrite a file  Find empty files and delete  find /tmp -type f -empty -delete",
+            "title": "Find"
+        },
+        {
+            "location": "/linux-commands/#listening-on-ports-traffic-network-connections",
+            "text": "Find port of runnin application  netstat -lnp | grep ts3\nnetstat -l -a -p -n    Find appliction listening on a port  sudo lsof -i :80  Monitor live Network connections and traffic  sudo tcptrack -i eth0 -r 5",
+            "title": "Listening on Ports, Traffic Network connections"
+        },
+        {
+            "location": "/linux-commands/#hardware-info",
+            "text": "All hardware info  sudo lshw | less  Motherbaord  sudo lshw -c system  Network  sudo lshw -C network  CPU  sudo lscpu   PCI (GPU info here as well)  sudo lspci   Memory  free -h",
+            "title": "Hardware info"
+        },
+        {
+            "location": "/linux-commands/#clonedownload-a-website",
+            "text": "wget --limit-rate=200k --no-clobber --convert-links --random-wait -r -p -E -e robots=off -U mozilla http://www.kossboss.com",
+            "title": "Clone/Download a website"
+        },
+        {
+            "location": "/linux-commands/#download-maps-from-csgo-web-server",
+            "text": "wget -r --no-parent --reject \"index.html*\"  http://fastdl.streamline-servers.com/fastdl/ThomasL/5623//maps/ |grep surf",
+            "title": "Download maps from csgo web server"
+        },
+        {
+            "location": "/linux-commands/#mount-windows-partition-that-is-in-hibernation-mode",
+            "text": "sudo ntfsfix /dev/sda3 \nsudo mount /dev/sda3 /mnt",
+            "title": "Mount Windows Partition that is in hibernation mode"
+        },
+        {
+            "location": "/linux-commands/#listing-user-logins-reboot-times-and-bad-login-attempts",
+            "text": "Get the running processes of logged-in users  w  Display Logged in users  users \n\nwho | cut -d' ' -f1 | sort | uniq  Get all users login and logout history  last   Get the users login history  last [user]   Display bad login attempts  last b   Display last reboot times  last reboot | less",
+            "title": "Listing User Logins, reboot times and bad login attempts"
+        },
+        {
+            "location": "/linux-commands/#commonnly-used",
+            "text": "Run a command every x seconds  watch -n10 command args   Directory size disincluding sub directory info  du -hs /path/to/directory   Find packages  apt-cache search   Send mail  echo \"test message\" | mailx -s 'test subject' john@domain.com    Number of files in dir  ls | wc -l   Redirecting the standard error (stderr) and stdout to file  command > file 2>&1    Get External/Public IP address:  curl ifconfig.me  Find installed packages(Ubuntu)  dpkg -l | grep php   Update a single package using the CLI (Ubuntu)  sudo apt-get --only-upgrade install <packagename>",
+            "title": "Commonnly used"
+        },
+        {
+            "location": "/linux-commands/#compare-files-and-directories-content",
+            "text": "diff file1 file2\ndiff /root/dir1/ /root/dir2/  Compare file content with visual output  sdiff file1 file2",
+            "title": "Compare files and directories content"
+        },
+        {
+            "location": "/linux-commands/#network-manager",
+            "text": "View IP settings  sudo service network-manager start   Ubuntu 14.04  nmcli dev list iface eth0   For newer versions, you can use this:  nmcli dev show eth0",
+            "title": "Network manager"
+        },
+        {
+            "location": "/linux-commands/#ufw",
+            "text": "Find port and protocal  ufw status numbered |(grep '80/tcp'|awk -F\"[][]\" '{print $2}')  Delete port  ufw delete $(ufw status numbered |(grep '80/tcp'|awk -F\"[][]\" '{print $2}'))  Delete firewall rules on cli and auto select yes  yes | for i in {50..3}; do sudo ufw delete $i; done",
+            "title": "UFW"
+        },
+        {
+            "location": "/linux-commands/#imagemagick-command-line-image-manipulation",
+            "text": "Installation  sudo apt-get install imagemagick \nsudo yum -y install ImageMagick   Converting Between Formats  convert howtogeek.png howtogeek.jpg   Resize Images  convert example.png -resize 200\u00d7100 example.png  Resize Images & Preserve aspect ratio  convert example.png -resize 200\u00d7100! example.png   Rotate Image  convert howtogeek.jpg -rotate 90 howtogeek-rotated.jpg   Converting Between Formats & Changing quality  convert howtogeek.png -quality 95 howtogeek.jpg   The Last example shows you that you can combined operations.",
+            "title": "ImageMagick - Command Line Image Manipulation"
+        },
+        {
+            "location": "/linux-commands/#tmux-screen",
+            "text": "Start new with session name  tmux new -s myname  Attach  tmux a tmuxname  Attach to named  tmux a -t myname  List sessions  tmux ls  Kill session  tmux kill-session -t myname  Inject a command to a detached screen  screen -p 0 -X stuff $'bot_kill\\n'",
+            "title": "TMUX &amp; screen"
+        },
+        {
+            "location": "/linux-commands/#curl",
+            "text": "Get Response code  curl -sI https://$SITE | head -1",
+            "title": "Curl"
+        },
+        {
+            "location": "/linux-commands/#dig",
+            "text": "Reverse DNS lookup    dig +noall +answer -x 199.232.99.199  -x Reverse DNS lookup   +noall  and  +answer  makes output pretty",
+            "title": "Dig"
+        },
+        {
+            "location": "/string-manipulation/",
+            "text": "awk, sed, cut ,grep, tail\n\n\nRemoving quotes\n\n\nawk '{ print \"\\\"\"$0\"\\\"\"}' inputfile\n\n\n\nUsing pure bash\n\n\nwhile read FOO; do\n   echo -e \"\\\"$FOO\\\"\"\ndone < inputfile\n\n\n\nwhere inputfile would be a file containing the lines without quotes.\n\n\nIf your file has empty lines, awk is definitely the way to go:\n\n\nawk 'NF { print \"\\\"\"$0\"\\\"\"}' inputfile\n\n\n\nNF tells awk to only execute the print command when the Number of Fields is more than zero (line is not empty).\n\n\n awk '{ print \"\\\"\"$0\"\\\"\"}' mapcycle_surf.txt > mapcycle_surf1.txt\n\n\n\nAWK's printf, NR and $0 make it easy to have precise and flexible control over the formatting\n\n\n awk '{printf(\"%010d %s\\n\", NR, $0)}' maplist.txt\n\n\n\n0000000001 surf_map1 0000000002 surf_map2 0000000003 surf_map3\n\n\nawk '{printf(\"%d %s \\n\", NR, $0)}' mapcycle_surf1.txt\n\n\n\n1 \"surf_004_final1\" 2 \"surf_1day\" 3 \"surf_2012_beta12\"\n\n\nawk '{printf(\"%s %d \\n\" ,$0 , NR)}' mapcycle_surf1.txt\n\n\n\n\"surf_004_final1\" 1 \"surf_1day\" 2 \"surf_2012_beta12\" 3\n\n\nawk '{printf(\"%s \\\"%d\\\" \\n\" ,$0 , NR)}' mapcycle_surf1.txt\n\n\n\n\"surf_004_final1\" \"1\" \"surf_1day\" \"2\" \"surf_2012_beta12\" \"3\"\n\n\nawk '{printf(\"%s \\\"%d\\\" \\n\" ,$0 , NR-1)}' mapcycle_surf1.txt > mapcycle_surf.txt\n\n\n\ncat mapcycle_surf.txt \"surf_004_final1\" \"0\" \"surf_1day\" \"1\" \"surf_2012_beta12\" \"2\" \"surf_3\" \"3\"\n\n\nString to replace: \"surf_prime_time_r3vamp /\"\n\n\nsed -i -E \"s,surf_[A-Za-z0-9]+_?-?[A-Za-z0-9]+_?[A-Za-z0-9]+\\s/, 123,\" workmaps.txt\n\n\n\n-i input file -E Regex\n\n\nRemove empty lines\n\n\nsed -i -E \"s,^\\s*$,,\" workmaps.txt\n\n\n\nRemove the first character sed\n\n\ncat input_file | sed 's/^..//' > output_file\n\n\n\nInstead of selecting x number of characters, if you like to extract a whole field, you can combine option -f and -d. The option -f specifies which field you want to extract, and the option -d specifies what is the field delimiter that is used in the input file.\n\n\nThe following example displays only first field of each lines from /etc/passwd file using the field delimiter : (colon). In this case, the 1st field is the username. The file\n\n\ncut -d':' -f1 /etc/passwd\n\n\n\nSearch and replace string\n\n\nfind . -type f -name \"gamemode_comp*\" -exec sed -i 's/YB53XUH3/\"J123f34J123454!^dfg\"/g' {} +\n\n\nawk '{print $3}' maps.txt\n\n\n\nbefore: [ ] surf_zion.nav.bz2 2015-06-21 18:27 132\n\n\nafter: surf_whoknows.nav.bz2\n\n\nDisplays unique values from compared files\n\n\ngrep -v -f <compare-file-1> <compare-file-2>\n\n\n\nSearch and replace text in multiple files and escape special characters\n\n\nsed -i 's/test.data\\*\\.keyboard/test\\.\\*\\.keyboard/g' *\n\n\n\nbefore: test.data*.keyboard\n\n\nafter: test.*.keyboard\n\n\nEscape Characters\n\n\nsed -i 's/\\(foo\\)/bin/g' file.json\n\n\n\nReplace string but keep indention or spaces\n\n\nsed -i  '/\"interval\":/i \\ \\ \\ \\ \\ \\ \"occurrences\": 2,' file.json\n\n\n\nAppend line after match\n\n\nsed  '/\\[option\\]/a Hello World' input\n\n\n\nInsert line before match\n\n\nsed  '/\\[option\\]/i Hello World' input\n\n\n\nDelete first 4 lines and last 4 lines from a text file\n\n\n tail -n +5 test.json | head -n -4 > test.json.new && mv test.json.new test.json\n\n tail -n +5 srv_ssh.json | head -n -4 > test.json.new && mv test.json.new srv_ssh.json\n\n\n\nRemove duplicate lines\n\n\n sort file.log | uniq > newfile.log\n\n\n\nSort strings by length\n\n\n awk '{ print length($0),$0 | \"sort -n\"}'  usragnt.txt\n\n\n\nDisplay files that do not have string:\n\n\n grep -L \"foo\" *\n\n\n\nDisplay files that do have string\n\n\n grep -n \"foo\" *",
+            "title": "Text (awk sed grep etc )"
+        },
+        {
+            "location": "/string-manipulation/#awk-sed-cut-grep-tail",
+            "text": "Removing quotes  awk '{ print \"\\\"\"$0\"\\\"\"}' inputfile  Using pure bash  while read FOO; do\n   echo -e \"\\\"$FOO\\\"\"\ndone < inputfile  where inputfile would be a file containing the lines without quotes.  If your file has empty lines, awk is definitely the way to go:  awk 'NF { print \"\\\"\"$0\"\\\"\"}' inputfile  NF tells awk to only execute the print command when the Number of Fields is more than zero (line is not empty).   awk '{ print \"\\\"\"$0\"\\\"\"}' mapcycle_surf.txt > mapcycle_surf1.txt  AWK's printf, NR and $0 make it easy to have precise and flexible control over the formatting   awk '{printf(\"%010d %s\\n\", NR, $0)}' maplist.txt  0000000001 surf_map1 0000000002 surf_map2 0000000003 surf_map3  awk '{printf(\"%d %s \\n\", NR, $0)}' mapcycle_surf1.txt  1 \"surf_004_final1\" 2 \"surf_1day\" 3 \"surf_2012_beta12\"  awk '{printf(\"%s %d \\n\" ,$0 , NR)}' mapcycle_surf1.txt  \"surf_004_final1\" 1 \"surf_1day\" 2 \"surf_2012_beta12\" 3  awk '{printf(\"%s \\\"%d\\\" \\n\" ,$0 , NR)}' mapcycle_surf1.txt  \"surf_004_final1\" \"1\" \"surf_1day\" \"2\" \"surf_2012_beta12\" \"3\"  awk '{printf(\"%s \\\"%d\\\" \\n\" ,$0 , NR-1)}' mapcycle_surf1.txt > mapcycle_surf.txt  cat mapcycle_surf.txt \"surf_004_final1\" \"0\" \"surf_1day\" \"1\" \"surf_2012_beta12\" \"2\" \"surf_3\" \"3\"  String to replace: \"surf_prime_time_r3vamp /\"  sed -i -E \"s,surf_[A-Za-z0-9]+_?-?[A-Za-z0-9]+_?[A-Za-z0-9]+\\s/, 123,\" workmaps.txt  -i input file -E Regex  Remove empty lines  sed -i -E \"s,^\\s*$,,\" workmaps.txt  Remove the first character sed  cat input_file | sed 's/^..//' > output_file  Instead of selecting x number of characters, if you like to extract a whole field, you can combine option -f and -d. The option -f specifies which field you want to extract, and the option -d specifies what is the field delimiter that is used in the input file.  The following example displays only first field of each lines from /etc/passwd file using the field delimiter : (colon). In this case, the 1st field is the username. The file  cut -d':' -f1 /etc/passwd  Search and replace string  find . -type f -name \"gamemode_comp*\" -exec sed -i 's/YB53XUH3/\"J123f34J123454!^dfg\"/g' {} +\n\n\nawk '{print $3}' maps.txt  before: [ ] surf_zion.nav.bz2 2015-06-21 18:27 132  after: surf_whoknows.nav.bz2  Displays unique values from compared files  grep -v -f <compare-file-1> <compare-file-2>  Search and replace text in multiple files and escape special characters  sed -i 's/test.data\\*\\.keyboard/test\\.\\*\\.keyboard/g' *  before: test.data*.keyboard  after: test.*.keyboard  Escape Characters  sed -i 's/\\(foo\\)/bin/g' file.json  Replace string but keep indention or spaces  sed -i  '/\"interval\":/i \\ \\ \\ \\ \\ \\ \"occurrences\": 2,' file.json  Append line after match  sed  '/\\[option\\]/a Hello World' input  Insert line before match  sed  '/\\[option\\]/i Hello World' input  Delete first 4 lines and last 4 lines from a text file   tail -n +5 test.json | head -n -4 > test.json.new && mv test.json.new test.json\n\n tail -n +5 srv_ssh.json | head -n -4 > test.json.new && mv test.json.new srv_ssh.json  Remove duplicate lines   sort file.log | uniq > newfile.log  Sort strings by length   awk '{ print length($0),$0 | \"sort -n\"}'  usragnt.txt  Display files that do not have string:   grep -L \"foo\" *  Display files that do have string   grep -n \"foo\" *",
+            "title": "awk, sed, cut ,grep, tail"
+        },
+        {
+            "location": "/mysql/",
+            "text": "coming soon",
+            "title": "MySQL"
+        },
+        {
+            "location": "/apache/",
+            "text": "coming soon",
+            "title": "Apache"
+        },
+        {
+            "location": "/docker/",
+            "text": "coming soon",
+            "title": "Docker"
+        },
+        {
+            "location": "/git/",
+            "text": "coming soon",
+            "title": "Git"
+        },
+        {
+            "location": "/vim/",
+            "text": "coming soon",
+            "title": "Vim"
+        },
+        {
+            "location": "/linux-desktop/",
+            "text": "coming soon",
+            "title": "Linux Desktop"
+        },
+        {
+            "location": "/macos/",
+            "text": "coming soon",
+            "title": "MacOS"
+        },
+        {
+            "location": "/understanding-opensouce-tools/",
+            "text": "coming soon",
+            "title": "Understanding opensource tools"
         }
     ]
 }

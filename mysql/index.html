@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Linux - Grovelab</title>
+  <title>MySQL - Grovelab</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Linux";
-    var mkdocs_page_input_path = "linux.md";
-    var mkdocs_page_url = "/linux/";
+    var mkdocs_page_name = "MySQL";
+    var mkdocs_page_input_path = "mysql.md";
+    var mkdocs_page_url = "/mysql/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -54,26 +54,60 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../linux-sysadmin/">Linux Sysadmin</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="../linux-commands/">Linux Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../string-manipulation/">Text (awk sed grep etc )</a>
 	    </li>
           
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">Linux</a>
+    <a class="current" href="./">MySQL</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#checking-logs-iptables-apache-wordpress-logins">Checking logs, IpTables, Apache, Wordpress logins</a></li>
-    
-
-    <li class="toctree-l2"><a href="#backup-all-changed-config-files">Backup all changed config files</a></li>
-    
-
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../about/about/">About</a>
+    <a class="" href="../apache/">Apache</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../docker/">Docker</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../git/">Git</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../vim/">Vim</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../linux-desktop/">Linux Desktop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../macos/">MacOS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../understanding-opensouce-tools/">Understanding opensource tools</a>
 	    </li>
           
         </ul>
@@ -98,7 +132,7 @@
     
       
     
-    <li>Linux</li>
+    <li>MySQL</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -108,22 +142,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="checking-logs-iptables-apache-wordpress-logins">Checking logs, IpTables, Apache, Wordpress logins</h2>
-<p><strong>Look at top IP addresses in your access log use:</strong></p>
-<pre><code class="bash">tail -n 10000 access.log|cut -f 1 -d ' '|sort|uniq -c|sort -nr|more 
-</code></pre>
-
-<p><strong>If nothing looks suspicious in IP list, use this query to check top hit URLs on your box:</strong></p>
-<pre><code class="bash">cut -f 2 -d '&quot;' access.log|cut -f 2 -d ' '|sort|uniq -c|sort -nr|more 
-</code></pre>
-
-<p><strong>Check for common user agents :</strong> </p>
-<pre><code class="bash">cut -f 4 -d '&quot;' access.log|sort|uniq -c|sort -nr|more 
-</code></pre>
-
-<h2 id="backup-all-changed-config-files">Backup all changed config files</h2>
-<pre><code class="bash">debsums -ce | tar --files-from=- -cf configs.tar 
-</code></pre>
+                <p>coming soon</p>
               
             </div>
           </div>
@@ -131,10 +150,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../about/about/" class="btn btn-neutral float-right" title="About">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../apache/" class="btn btn-neutral float-right" title="Apache">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../linux-commands/" class="btn btn-neutral" title="Linux Commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../string-manipulation/" class="btn btn-neutral" title="Text (awk sed grep etc )"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -160,10 +179,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../linux-commands/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../string-manipulation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../about/about/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../apache/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

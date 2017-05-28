@@ -4,7 +4,15 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-05-27</lastmod>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/linux-sysadmin/</loc>
+     <lastmod>2017-05-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,23 +20,79 @@
     
     <url>
      <loc>/linux-commands/</loc>
-     <lastmod>2017-05-27</lastmod>
+     <lastmod>2017-05-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/linux/</loc>
-     <lastmod>2017-05-27</lastmod>
+     <loc>/string-manipulation/</loc>
+     <lastmod>2017-05-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/about/about/</loc>
-     <lastmod>2017-05-27</lastmod>
+     <loc>/mysql/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/apache/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/docker/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/git/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/vim/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/linux-desktop/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/macos/</loc>
+     <lastmod>2017-05-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/understanding-opensouce-tools/</loc>
+     <lastmod>2017-05-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
