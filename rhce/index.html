@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Docker - Grovelab</title>
+  <title>RHCE - Grovelab</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Docker";
-    var mkdocs_page_input_path = "docker.md";
-    var mkdocs_page_url = "/docker/";
+    var mkdocs_page_name = "RHCE";
+    var mkdocs_page_input_path = "rhce.md";
+    var mkdocs_page_url = "/rhce/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -82,22 +82,9 @@
     <a class="" href="../apache/">Apache</a>
 	    </li>
           
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Docker</a>
-    <ul class="subnav">
-            
-    </ul>
-	    </li>
-          
             <li class="toctree-l1">
 		
     <a class="" href="../git/">Git</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../vim/">Vim</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -113,6 +100,23 @@
             <li class="toctree-l1">
 		
     <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">RHCE</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#useful-commands">Useful Commands</a></li>
+    
+
+    <li class="toctree-l2"><a href="#networking">Networking</a></li>
+    
+
+    <li class="toctree-l2"><a href="#firewalld-firewall-cmd">Firewalld / Firewall-cmd</a></li>
+    
+
+    </ul>
 	    </li>
           
         </ul>
@@ -137,7 +141,7 @@
     
       
     
-    <li>Docker</li>
+    <li>RHCE</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -147,7 +151,99 @@
           <div role="main">
             <div class="section">
               
-                <p>coming soon</p>
+                <h2 id="useful-commands">Useful Commands</h2>
+<p><strong>Check if service is enabled</strong></p>
+<pre><code class="bash">systemctl is-enabled sshd
+</code></pre>
+
+<p><strong>Install auto completion</strong></p>
+<pre><code class="bash">yum -y install bash-completion
+</code></pre>
+
+<p><strong>Python breaks if no default language output is set</strong></p>
+<pre><code class="bash">echo &quot;export LC_ALL=C&quot; &gt;&gt; ~/.bashrc
+source ~/.bashrc
+</code></pre>
+
+<h2 id="networking">Networking</h2>
+<p><strong>Show connections/networks settings</strong></p>
+<pre><code class="bash">nmcli con show
+</code></pre>
+
+<p><strong>Delete connection</strong></p>
+<pre><code class="bash">nmcli con delete net-eth0
+</code></pre>
+
+<p><strong>Add connection</strong></p>
+<pre><code class="bash">nmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1
+
+</code></pre>
+
+<p><strong>Apply settings</strong></p>
+<p>Stop and Start the connection to apply new settings</p>
+<pre><code class="bash">nmcli con down net-eth0
+nmcli con up net-eth0
+</code></pre>
+
+<p><strong>Show all network details of a connection</strong></p>
+<pre><code class="bash">nmcli con show net-eth0
+</code></pre>
+
+<h2 id="firewalld-firewall-cmd">Firewalld / Firewall-cmd</h2>
+<ul>
+<li>
+<p>Temporary rules get activated immidiatly</p>
+</li>
+<li>
+<p>To Activate permanent rules one needs to reload firewalld.</p>
+</li>
+<li>
+<p>If you dont specify a zone, your default zone will be used.</p>
+</li>
+</ul>
+<p><strong>Get Firewalld state</strong></p>
+<pre><code class="bash">firewall-cmd --state
+</code></pre>
+
+<p><strong>Get Active Zones</strong></p>
+<p>Zones are a group firewall rules</p>
+<pre><code class="bash">firewall-cmd --get-active-zones
+</code></pre>
+
+<p><strong>List all active zones and rules</strong></p>
+<pre><code class="bash">firewall-cmd --list-all
+</code></pre>
+
+<p><strong>View all firewall rules of a zone</strong></p>
+<pre><code class="bash">firewall-cmd --zone=public --list-all
+cat /etc/firewalld/zones/public.xml
+</code></pre>
+
+<p><strong>List whitelisted services/ports</strong></p>
+<pre><code class="bash">firewall-cmd --list-services
+firewall-cmd --list-ports
+</code></pre>
+
+<p><strong>Get services</strong></p>
+<p>Lists all services a person can whitelist</p>
+<pre><code class="bash">firewall-cmd --get-services
+ls /usr/lib/firewalld/services/
+</code></pre>
+
+<p><strong>Whitelist service,port and multiple ports</strong></p>
+<pre><code class="bash">firewall-cmd --permanent --zone=public --add-service=https
+firewall-cmd --permanent --zone=public --add-port=443/tcp
+firewall-cmd --permanent --add-port=1000-1010/udp
+</code></pre>
+
+<p><strong>Reload</strong></p>
+<pre><code class="bash">firewall-cmd --reload
+</code></pre>
+
+<p><strong>Remove Service or Port</strong></p>
+<pre><code class="bash">firewall-cmd --permanent --remove-service=http
+firewall-cmd --permanent --remove-port=443/tcp
+</code></pre>
               
             </div>
           </div>
@@ -155,10 +251,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../git/" class="btn btn-neutral float-right" title="Git">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../apache/" class="btn btn-neutral" title="Apache"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../opensouce-tools-and-terms/" class="btn btn-neutral" title="Linux Tools and Terms"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -172,26 +266,27 @@
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../apache/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../opensouce-tools-and-terms/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../git/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
+    <script>var base_url = '..';</script>
     <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
 
 </body>
 </html>

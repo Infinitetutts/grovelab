@@ -311,39 +311,14 @@
             "title": "Enable caching"
         },
         {
-            "location": "/docker/",
-            "text": "coming soon",
-            "title": "Docker"
-        },
-        {
             "location": "/git/",
-            "text": "Commands\n\n\ngit pull\n - Pull latest code from git\n\n\ngit checkout -b onelove\n - Create branch  \n\n\ngit checkout onelove\n - Change branch \n\n\ngit status\n - Check difference between git branch and local files\n\n\ngit add .\n - Adds all files in directory to be commited\n\n\ngit add jah.sh\n - Adds specific file to be commited\n\n\ngit push -f origin branch_name\n - Force git push  \n\n\nSetting up a new git repo\n\n\ngit init .\ngit add init.vim\ngit commit -m \"First step towards neovim\"\ngit remote add origin git@github.com:Infinitetutts/dotfiles.git\ngit push origin master",
+            "text": "Commands\n\n\ngit pull\n - Pull latest code from git\n\n\ngit checkout -b onelove\n - Create branch  \n\n\ngit checkout onelove\n - Change branch \n\n\ngit status\n - Check difference between git branch and local files\n\n\ngit add .\n - Adds all files in directory to be commited\n\n\ngit add jah.sh\n - Adds specific file to be commited\n\n\ngit push -f origin branch_name\n - Force git push",
             "title": "Git"
         },
         {
             "location": "/git/#commands",
             "text": "git pull  - Pull latest code from git  git checkout -b onelove  - Create branch    git checkout onelove  - Change branch   git status  - Check difference between git branch and local files  git add .  - Adds all files in directory to be commited  git add jah.sh  - Adds specific file to be commited  git push -f origin branch_name  - Force git push",
             "title": "Commands"
-        },
-        {
-            "location": "/git/#setting-up-a-new-git-repo",
-            "text": "git init .\ngit add init.vim\ngit commit -m \"First step towards neovim\"\ngit remote add origin git@github.com:Infinitetutts/dotfiles.git\ngit push origin master",
-            "title": "Setting up a new git repo"
-        },
-        {
-            "location": "/vim/",
-            "text": "Commands\n\n\nOpen file\n\n\n:e Documents/python.py\n\n\n\n\nImport text from file\n\n\n:r Documents/bash.sh\n\n\n\n\nExecute shell command from vim\n\n\n:!echo yolo\n\n\n\n\nVIM Plugins\n\n\nVundle\n\n\n:PluginIList\n:PluginInstall\n:PluginUpdate",
-            "title": "Vim"
-        },
-        {
-            "location": "/vim/#commands",
-            "text": "Open file  :e Documents/python.py  Import text from file  :r Documents/bash.sh  Execute shell command from vim  :!echo yolo",
-            "title": "Commands"
-        },
-        {
-            "location": "/vim/#vim-plugins",
-            "text": "Vundle  :PluginIList\n:PluginInstall\n:PluginUpdate",
-            "title": "VIM Plugins"
         },
         {
             "location": "/linux-desktop/",
@@ -362,12 +337,12 @@
         },
         {
             "location": "/macos/",
-            "text": "Create a bootable USB\n\n\n1. Convert the .iso file to .img\n\n\nhdiutil convert -format UDRW -o ~/path/to/target.img ~/path/to/ubuntu.iso\n\n\n\n\n2. Determine the device node assigned to your flash media (e.g. /dev/disk2).\n\n\ndiskutil list\n\n\n\n\n3. Unmount\n\n\ndiskutil unmountDisk /dev/diskN\n\n\n\n\n4. Write Image to USB\n\n\nsudo dd if=/path/to/downloaded.img of=/dev/rdiskN bs=1m\n\n\n\n\nUsing \n/dev/rdisk\n instead of \n/dev/disk\n may be faster.   \n\nIf you see the error \ndd\n: \nInvalid number '1m'\n, you are using GNU \ndd\n. Use the same command but replace \nbs=1m\n with \nbs=1M\n\n\n5. Safely Remove USB when completed\n\n\ndiskutil eject /dev/diskN",
+            "text": "Create a bootable USB\n\n\n1. Determine the device node assigned to your flash media (e.g. /dev/disk2).\n\n\ndiskutil list\n\n\n\n\n2. Unmount\n\n\ndiskutil unmountDisk /dev/diskN\n\n\n\n\n3. Write Image to USB\n\n\nsudo dd if=/path/to/downloaded.iso of=/dev/rdiskN bs=1m\n\n\n\n\nUsing \n/dev/rdisk\n instead of \n/dev/disk\n may be faster.   \n\nIf you see the error \ndd\n: \nInvalid number '1m'\n, you are using GNU \ndd\n. Use the same command but replace \nbs=1m\n with \nbs=1M\n\n\n4. Safely Remove USB when completed\n\n\ndiskutil eject /dev/diskN",
             "title": "MacOS"
         },
         {
             "location": "/macos/#create-a-bootable-usb",
-            "text": "1. Convert the .iso file to .img  hdiutil convert -format UDRW -o ~/path/to/target.img ~/path/to/ubuntu.iso  2. Determine the device node assigned to your flash media (e.g. /dev/disk2).  diskutil list  3. Unmount  diskutil unmountDisk /dev/diskN  4. Write Image to USB  sudo dd if=/path/to/downloaded.img of=/dev/rdiskN bs=1m  Using  /dev/rdisk  instead of  /dev/disk  may be faster.    \nIf you see the error  dd :  Invalid number '1m' , you are using GNU  dd . Use the same command but replace  bs=1m  with  bs=1M  5. Safely Remove USB when completed  diskutil eject /dev/diskN",
+            "text": "1. Determine the device node assigned to your flash media (e.g. /dev/disk2).  diskutil list  2. Unmount  diskutil unmountDisk /dev/diskN  3. Write Image to USB  sudo dd if=/path/to/downloaded.iso of=/dev/rdiskN bs=1m  Using  /dev/rdisk  instead of  /dev/disk  may be faster.    \nIf you see the error  dd :  Invalid number '1m' , you are using GNU  dd . Use the same command but replace  bs=1m  with  bs=1M  4. Safely Remove USB when completed  diskutil eject /dev/diskN",
             "title": "Create a bootable USB"
         },
         {
@@ -379,6 +354,26 @@
             "location": "/opensouce-tools-and-terms/#opensource-tools-and-terms",
             "text": "What is a  Proxy server  ? Proxy Server evaluates client's requests and serves the client data according.  What is a  Reverse Proxy Server  ? A Reverse Proxy Server acts on behalf of the server, Client directly makes contact with the web server, the reverse proxy residing on the web server then forwards data accordingly to the other services which then return to the client.  What is a  CDN  ? A content delivery network is a group of proxy servers that are placed geographically in different data centers, which provides objects (scripts, images, files, text, etc) to large amounts of web requests. The benefits of a CDN is to save server performance as the CDN objects are pulled from the CDN servers and not your webserver. This allows you to provide content to your users with high end performance.  What is  Redis  ? Remote Directory server, It is in memory key-value data storing (data structure server), This provides high speed performance, can be used as a real data storing and caching. Data is persistent there for nothing is lost after restarts.  What is  Memcache  ? Memcache is a memory object caching system similar to Redis. What is Cisco ASA ? Adaptive Security Appliance. Mainly used as a firewall, but has the following capabilities: Antivirus, Intrusion prevention, content inspection and VPN and SSL capabilities.  What is  Solr  ? It is an advanced full text search engine. It is great for load balancing to improve performance by indexing the search text. Elastic Search is the most popular text search engine, second by Solr.  What is  Graphite  ? Graphite collects data not for monitoring but used for analyzing and viewing.  What is  Carbon  ? Carbon stores the Graphite configuration.It handles data sent over by other processes that collect and transmit statistics.  What is  Whisper  ? Whisper is a database library used by Graphite to store and archive data.  What is  Monite  ? Monit is a monitoring tool which can be plugged into graphite.  What is  Kibana  ? Kabana is a web application that allows one to build flexible dashboards. This can source data from ElasticSearch. Grafana is forked from Kibana.  What is  StatsD  ? StatsD is a daemon that listens for metrics sent over UDP. The data is sent to external services for graphing.  What is  CollectD  ? CollectD is a daemon that collects data from pre-build applications and common services on your servers.  What is  Sensu  ? A monitoring solution.  What is  Jenkins  ? An automation server with continuous integration and continuous delivery for applications. It runs tests on your machines automatically each time new code is submitted to the source repository.  What is  MySQL Replication  ? It is database replication that allows you to replicate multiple copies of your database by having them copied automatically from a master to a slave database.  What is  Vagrant  ? Vagrant is automation software that creates and configures virtual development environments. This installs your operating system with your applications and all of its dependencies.  What is  Docker  ? Automates application deployment inside containers. This allows applications to run as a stand alone without a full OS installation.  What is  Mesosphere  ? It is a Data Center Operating System. It gathers the specified amount of computer nodes to be used as one cluster. The amount of nodes can be scaled with a single command line. It allows you to deploy applications fast and effortlessly without you having to specify the node as it automatically handle your application resource consumption across the nodes.",
             "title": "Opensource tools and terms"
+        },
+        {
+            "location": "/rhce/",
+            "text": "Useful Commands\n\n\nCheck if service is enabled\n\n\nsystemctl is-enabled sshd\n\n\n\n\nInstall auto completion\n\n\nyum -y install bash-completion\n\n\n\n\nPython breaks if no default language output is set\n\n\necho \"export LC_ALL=C\" >> ~/.bashrc\nsource ~/.bashrc\n\n\n\n\nNetworking\n\n\nShow connections/networks settings\n\n\nnmcli con show\n\n\n\n\nDelete connection\n\n\nnmcli con delete net-eth0\n\n\n\n\nAdd connection\n\n\nnmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1\n\n\n\n\n\nApply settings\n\n\nStop and Start the connection to apply new settings\n\n\nnmcli con down net-eth0\nnmcli con up net-eth0\n\n\n\n\nShow all network details of a connection\n\n\nnmcli con show net-eth0\n\n\n\n\nFirewalld / Firewall-cmd\n\n\n\n\n\n\nTemporary rules get activated immidiatly\n\n\n\n\n\n\nTo Activate permanent rules one needs to reload firewalld.\n\n\n\n\n\n\nIf you dont specify a zone, your default zone will be used.\n\n\n\n\n\n\nGet Firewalld state\n\n\nfirewall-cmd --state\n\n\n\n\nGet Active Zones\n\n\nZones are a group firewall rules\n\n\nfirewall-cmd --get-active-zones\n\n\n\n\nList all active zones and rules\n\n\nfirewall-cmd --list-all\n\n\n\n\nView all firewall rules of a zone\n\n\nfirewall-cmd --zone=public --list-all\ncat /etc/firewalld/zones/public.xml\n\n\n\n\nList whitelisted services/ports\n\n\nfirewall-cmd --list-services\nfirewall-cmd --list-ports\n\n\n\n\nGet services\n\n\nLists all services a person can whitelist\n\n\nfirewall-cmd --get-services\nls /usr/lib/firewalld/services/\n\n\n\n\nWhitelist service,port and multiple ports\n\n\nfirewall-cmd --permanent --zone=public --add-service=https\nfirewall-cmd --permanent --zone=public --add-port=443/tcp\nfirewall-cmd --permanent --add-port=1000-1010/udp\n\n\n\n\nReload\n\n\nfirewall-cmd --reload\n\n\n\n\nRemove Service or Port\n\n\nfirewall-cmd --permanent --remove-service=http\nfirewall-cmd --permanent --remove-port=443/tcp",
+            "title": "RHCE"
+        },
+        {
+            "location": "/rhce/#useful-commands",
+            "text": "Check if service is enabled  systemctl is-enabled sshd  Install auto completion  yum -y install bash-completion  Python breaks if no default language output is set  echo \"export LC_ALL=C\" >> ~/.bashrc\nsource ~/.bashrc",
+            "title": "Useful Commands"
+        },
+        {
+            "location": "/rhce/#networking",
+            "text": "Show connections/networks settings  nmcli con show  Delete connection  nmcli con delete net-eth0  Add connection  nmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1  Apply settings  Stop and Start the connection to apply new settings  nmcli con down net-eth0\nnmcli con up net-eth0  Show all network details of a connection  nmcli con show net-eth0",
+            "title": "Networking"
+        },
+        {
+            "location": "/rhce/#firewalld-firewall-cmd",
+            "text": "Temporary rules get activated immidiatly    To Activate permanent rules one needs to reload firewalld.    If you dont specify a zone, your default zone will be used.    Get Firewalld state  firewall-cmd --state  Get Active Zones  Zones are a group firewall rules  firewall-cmd --get-active-zones  List all active zones and rules  firewall-cmd --list-all  View all firewall rules of a zone  firewall-cmd --zone=public --list-all\ncat /etc/firewalld/zones/public.xml  List whitelisted services/ports  firewall-cmd --list-services\nfirewall-cmd --list-ports  Get services  Lists all services a person can whitelist  firewall-cmd --get-services\nls /usr/lib/firewalld/services/  Whitelist service,port and multiple ports  firewall-cmd --permanent --zone=public --add-service=https\nfirewall-cmd --permanent --zone=public --add-port=443/tcp\nfirewall-cmd --permanent --add-port=1000-1010/udp  Reload  firewall-cmd --reload  Remove Service or Port  firewall-cmd --permanent --remove-service=http\nfirewall-cmd --permanent --remove-port=443/tcp",
+            "title": "Firewalld / Firewall-cmd"
         }
     ]
 }
