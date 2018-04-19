@@ -90,7 +90,7 @@
     </url>
         
     <url>
-     <loc>/RHCE/cmds/</loc>
+     <loc>/RHCE/useful-cmds/</loc>
      <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -108,7 +108,7 @@
     </url>
         
     <url>
-     <loc>/RHCE/client-auth-with-kerberos-ldap/</loc>
+     <loc>/RHCE/client-auth-kerb-ldap/</loc>
      <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>

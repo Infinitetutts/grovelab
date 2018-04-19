@@ -54,17 +54,17 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../../linux-sysadmin/">Linux Sysadmin</a>
+    <a class="" href="../../linux-sysadmin/">Linux sysadmin</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../../linux-commands/">Linux Commands</a>
+    <a class="" href="../../linux-commands/">Linux commands</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../../linuxtools-commands/">Linux Tools Commands</a>
+    <a class="" href="../../linuxtools-commands/">Linux tools commands</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -89,7 +89,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../../linux-desktop/">Linux Desktop</a>
+    <a class="" href="../../linux-desktop/">Linux desktop</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -107,7 +107,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../cmds/">Useful commands</a>
+    <a class="" href="../useful-cmds/">Useful commands</a>
                 </li>
                 <li class=" current">
                     
@@ -118,11 +118,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../firewall-cmd/">Firewall-cmd</a>
+    <a class="" href="../firewall-cmd/">firewall-cmd</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../client-auth-with-kerberos-ldap/">Client authentication with kerberos & ldap</a>
+    <a class="" href="../client-auth-kerb-ldap/">Client auth with kerberos & ldap</a>
                 </li>
     </ul>
 	    </li>
@@ -166,38 +166,37 @@
                 <p><strong>Networking</strong></p>
 <hr />
 <p><strong>Show connections/networks settings</strong></p>
-<pre><code class="bash">nmcli con show
+<pre><code>nmcli con show
 </code></pre>
 
 <p><strong>Delete connection</strong></p>
-<pre><code class="bash">nmcli con delete net-eth0
+<pre><code>nmcli con delete net-eth0
 </code></pre>
 
 <p><strong>Add connection</strong></p>
-<pre><code class="bash">nmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1
-
+<pre><code>nmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1
 </code></pre>
 
 <p><strong>Add/Modify DNS</strong></p>
-<pre><code class="bash">nmcli con mod net-eth0 ipv4.dns 8.8.8.8
+<pre><code>nmcli con mod net-eth0 ipv4.dns 8.8.8.8
 </code></pre>
 
 <p><strong>Modify the IP address and default gateway</strong></p>
-<pre><code class="bash">nmcli con modify net-eth0 ipv4.addresses &quot;192.168.1.10/24 192.168.1.1&quot;
+<pre><code>nmcli con modify net-eth0 ipv4.addresses &quot;192.168.1.10/24 192.168.1.1&quot;
 </code></pre>
 
-<p>Later versions of Redhat &amp; Centos 7 can use this to modify the gateway:</p>
-<pre><code class="bash">nmcli con modify net-eth0 ipv4.gateway 192.168.1.1
+<p><strong>Later versions of Redhat &amp; Centos 7 can use this to modify the gateway:</strong></p>
+<pre><code>nmcli con modify net-eth0 ipv4.gateway 192.168.1.1
 </code></pre>
 
-<p><strong>Apply settings</strong></p>
-<p>Stop and Start the connection to apply new settings</p>
-<pre><code class="bash">nmcli con down net-eth0
+<p><strong>Apply settings</strong>
+Stop and Start the connection to apply new settings</p>
+<pre><code>nmcli con down net-eth0
 nmcli con up net-eth0
 </code></pre>
 
 <p><strong>Show all network details of a connection</strong></p>
-<pre><code class="bash">nmcli con show net-eth0
+<pre><code>nmcli con show net-eth0
 </code></pre>
               
             </div>
@@ -206,10 +205,10 @@ nmcli con up net-eth0
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../firewall-cmd/" class="btn btn-neutral float-right" title="Firewall-cmd">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../firewall-cmd/" class="btn btn-neutral float-right" title="firewall-cmd">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../cmds/" class="btn btn-neutral" title="Useful commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../useful-cmds/" class="btn btn-neutral" title="Useful commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -235,7 +234,7 @@ nmcli con up net-eth0
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../cmds/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../useful-cmds/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../firewall-cmd/" style="color: #fcfcfc">Next &raquo;</a></span>
