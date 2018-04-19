@@ -6,4 +6,4 @@ Website:
 
 
 Contribute to wiki here: 
-[Grovelab development](https://github.com/Infinitetutts/mkdocs-grovelab)
+[Grovelab development](https://github.com/Infinitetutts/grovelab-dev)
