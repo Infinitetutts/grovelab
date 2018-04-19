@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Client authentication with kerberos & ldap - Grovelab</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Client authentication with kerberos & ldap";
+    var mkdocs_page_input_path = "RHCE/client-auth-with-kerberos-ldap.md";
+    var mkdocs_page_url = "/RHCE/client-auth-with-kerberos-ldap/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Grovelab</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../linux-sysadmin/">Linux Sysadmin</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../linux-commands/">Linux Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../linuxtools-commands/">Linux Tools Commands</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../text/">Text (awk sed grep etc )</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../mysql/">MySQL</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../apache/">Apache</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../git/">Git</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../linux-desktop/">Linux Desktop</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../macos/">MacOS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../opensouce-tools-and-terms/">Linux Tools and Terms</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">RHCE</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../resources/">Resources</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cmds/">Useful commands</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../networking/">Networking</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../firewall-cmd/">Firewall-cmd</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Client authentication with kerberos & ldap</a>
+    <ul class="subnav">
+            
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Grovelab</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>RHCE &raquo;</li>
+        
+      
+    
+    <li>Client authentication with kerberos & ldap</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><strong>Setup IPA Server</strong></p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=5NyWr7kMfRI&amp;t">Setup IPA server video</a></li>
+<li><a href="https://read.phabtech.com/index.php/2017/07/24/ipaserver-configuration/">Setup IPA server blog</a></li>
+</ul>
+<hr />
+<p><strong>Client Authentication With Kerberos to IPA Server</strong></p>
+<hr />
+<p><strong>Install packages</strong></p>
+<pre><code>yum install nss-pam-ldapd pam_krb5
+</code></pre>
+
+<p><strong>Configure authentication</strong></p>
+<pre><code>authconfig-tui
+</code></pre>
+
+<pre><code>[*] Use LDAP
+[*] Use Kerberos
+  Next
+[*] Use TLS
+Server: ldap://ipa.example.com
+Base DN: dc=example,dc=com
+  Next
+Realm: EXAMPLE.COM
+[*] Use DNS to resolve hosts to realms
+[*] Use DNS to locate KDCs for realms
+</code></pre>
+
+<p><strong>Copy the certificate</strong></p>
+<pre><code>scp root@ipa.example.com:/root/cacert.p12 /etc/openldap/cacerts/
+</code></pre>
+
+<p><strong>Uncomment the line "#tls_reqcert never" from nslcd.conf</strong></p>
+<pre><code>vim /etc/nslcd.conf
+</code></pre>
+
+<p><strong>Apply settings</strong></p>
+<pre><code>systemctl restart nslcd
+</code></pre>
+
+<p><strong>Test if authentication is working</strong></p>
+<pre><code>getent passwd ldapuser1
+su - ldapuser1
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../firewall-cmd/" class="btn btn-neutral" title="Firewall-cmd"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../firewall-cmd/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

@@ -356,24 +356,29 @@
             "title": "Opensource tools and terms"
         },
         {
-            "location": "/rhce/",
-            "text": "Useful Commands\n\n\nCheck if service is enabled\n\n\nsystemctl is-enabled sshd\n\n\n\n\nInstall auto completion\n\n\nyum -y install bash-completion\n\n\n\n\nPython breaks if no default language output is set\n\n\necho \"export LC_ALL=C\" >> ~/.bashrc\nsource ~/.bashrc\n\n\n\n\nNetworking\n\n\nShow connections/networks settings\n\n\nnmcli con show\n\n\n\n\nDelete connection\n\n\nnmcli con delete net-eth0\n\n\n\n\nAdd connection\n\n\nnmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1\n\n\n\n\n\nApply settings\n\n\nStop and Start the connection to apply new settings\n\n\nnmcli con down net-eth0\nnmcli con up net-eth0\n\n\n\n\nShow all network details of a connection\n\n\nnmcli con show net-eth0\n\n\n\n\nFirewalld / Firewall-cmd\n\n\n\n\n\n\nTemporary rules get activated immidiatly\n\n\n\n\n\n\nTo Activate permanent rules one needs to reload firewalld.\n\n\n\n\n\n\nIf you dont specify a zone, your default zone will be used.\n\n\n\n\n\n\nGet Firewalld state\n\n\nfirewall-cmd --state\n\n\n\n\nGet Active Zones\n\n\nZones are a group firewall rules\n\n\nfirewall-cmd --get-active-zones\n\n\n\n\nList all active zones and rules\n\n\nfirewall-cmd --list-all\n\n\n\n\nView all firewall rules of a zone\n\n\nfirewall-cmd --zone=public --list-all\ncat /etc/firewalld/zones/public.xml\n\n\n\n\nList whitelisted services/ports\n\n\nfirewall-cmd --list-services\nfirewall-cmd --list-ports\n\n\n\n\nGet services\n\n\nLists all services a person can whitelist\n\n\nfirewall-cmd --get-services\nls /usr/lib/firewalld/services/\n\n\n\n\nWhitelist service,port and multiple ports\n\n\nfirewall-cmd --permanent --zone=public --add-service=https\nfirewall-cmd --permanent --zone=public --add-port=443/tcp\nfirewall-cmd --permanent --add-port=1000-1010/udp\n\n\n\n\nReload\n\n\nfirewall-cmd --reload\n\n\n\n\nRemove Service or Port\n\n\nfirewall-cmd --permanent --remove-service=http\nfirewall-cmd --permanent --remove-port=443/tcp",
-            "title": "RHCE"
+            "location": "/RHCE/resources/",
+            "text": "Resources\n\n\n\n\n\n\nPhabTech\n\n\nLiseNet\n\n\nCertDepot",
+            "title": "Resources"
         },
         {
-            "location": "/rhce/#useful-commands",
-            "text": "Check if service is enabled  systemctl is-enabled sshd  Install auto completion  yum -y install bash-completion  Python breaks if no default language output is set  echo \"export LC_ALL=C\" >> ~/.bashrc\nsource ~/.bashrc",
-            "title": "Useful Commands"
+            "location": "/RHCE/cmds/",
+            "text": "Useful Commands\n\n\n\n\nCheck if service is enabled\n\n\nsystemctl is-enabled sshd\n\n\n\n\nInstall auto completion\n\n\nyum -y install bash-completion\n\n\n\n\nPython breaks if no default language output is set\n\n\necho \"export LC_ALL=C\" >> ~/.bashrc\nsource ~/.bashrc",
+            "title": "Useful commands"
         },
         {
-            "location": "/rhce/#networking",
-            "text": "Show connections/networks settings  nmcli con show  Delete connection  nmcli con delete net-eth0  Add connection  nmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1  Apply settings  Stop and Start the connection to apply new settings  nmcli con down net-eth0\nnmcli con up net-eth0  Show all network details of a connection  nmcli con show net-eth0",
+            "location": "/RHCE/networking/",
+            "text": "Networking\n\n\n\n\nShow connections/networks settings\n\n\nnmcli con show\n\n\n\n\nDelete connection\n\n\nnmcli con delete net-eth0\n\n\n\n\nAdd connection\n\n\nnmcli con add con-name net-eth0 ifname eth0 type ethernet ip4 192.168.1.10/24 gw4 192.168.1.1\n\n\n\n\n\nAdd/Modify DNS\n\n\nnmcli con mod net-eth0 ipv4.dns 8.8.8.8\n\n\n\n\nModify the IP address and default gateway\n\n\nnmcli con modify net-eth0 ipv4.addresses \"192.168.1.10/24 192.168.1.1\"\n\n\n\n\nLater versions of Redhat & Centos 7 can use this to modify the gateway:\n\n\nnmcli con modify net-eth0 ipv4.gateway 192.168.1.1\n\n\n\n\nApply settings\n\n\nStop and Start the connection to apply new settings\n\n\nnmcli con down net-eth0\nnmcli con up net-eth0\n\n\n\n\nShow all network details of a connection\n\n\nnmcli con show net-eth0",
             "title": "Networking"
         },
         {
-            "location": "/rhce/#firewalld-firewall-cmd",
-            "text": "Temporary rules get activated immidiatly    To Activate permanent rules one needs to reload firewalld.    If you dont specify a zone, your default zone will be used.    Get Firewalld state  firewall-cmd --state  Get Active Zones  Zones are a group firewall rules  firewall-cmd --get-active-zones  List all active zones and rules  firewall-cmd --list-all  View all firewall rules of a zone  firewall-cmd --zone=public --list-all\ncat /etc/firewalld/zones/public.xml  List whitelisted services/ports  firewall-cmd --list-services\nfirewall-cmd --list-ports  Get services  Lists all services a person can whitelist  firewall-cmd --get-services\nls /usr/lib/firewalld/services/  Whitelist service,port and multiple ports  firewall-cmd --permanent --zone=public --add-service=https\nfirewall-cmd --permanent --zone=public --add-port=443/tcp\nfirewall-cmd --permanent --add-port=1000-1010/udp  Reload  firewall-cmd --reload  Remove Service or Port  firewall-cmd --permanent --remove-service=http\nfirewall-cmd --permanent --remove-port=443/tcp",
-            "title": "Firewalld / Firewall-cmd"
+            "location": "/RHCE/firewall-cmd/",
+            "text": "Firewalld / Firewall-cmd\n\n\n\n\n\n\n\n\nTemporary rules get activated immidiatly\n\n\n\n\n\n\nTo Activate permanent rules one needs to reload firewalld.\n\n\n\n\n\n\nIf you dont specify a zone, your default zone will be used.\n\n\n\n\n\n\nGet Firewalld state\n\n\nfirewall-cmd --state\n\n\n\n\nGet Active Zones\n\n\nZones are a group firewall rules\n\n\nfirewall-cmd --get-active-zones\n\n\n\n\nList all active zones and rules\n\n\nfirewall-cmd --list-all\n\n\n\n\nView all firewall rules of a zone\n\n\nfirewall-cmd --zone=public --list-all\ncat /etc/firewalld/zones/public.xml\n\n\n\n\nList whitelisted services/ports\n\n\nfirewall-cmd --list-services\nfirewall-cmd --list-ports\n\n\n\n\nGet services\n\n\nLists all services a person can whitelist\n\n\nfirewall-cmd --get-services\nls /usr/lib/firewalld/services/\n\n\n\n\nWhitelist service,port and multiple ports\n\n\nfirewall-cmd --permanent --zone=public --add-service=https\nfirewall-cmd --permanent --zone=public --add-port=443/tcp\nfirewall-cmd --permanent --add-port=1000-1010/udp\n\n\n\n\nReload\n\n\nfirewall-cmd --reload\n\n\n\n\nRemove Service or Port\n\n\nfirewall-cmd --permanent --remove-service=http\nfirewall-cmd --permanent --remove-port=443/tcp",
+            "title": "Firewall-cmd"
+        },
+        {
+            "location": "/RHCE/client-auth-with-kerberos-ldap/",
+            "text": "Setup IPA Server\n\n\n\n\nSetup IPA server video\n\n\nSetup IPA server blog\n\n\n\n\n\n\nClient Authentication With Kerberos to IPA Server\n\n\n\n\nInstall packages\n\n\nyum install nss-pam-ldapd pam_krb5\n\n\n\n\nConfigure authentication\n\n\nauthconfig-tui\n\n\n\n\n[*] Use LDAP\n[*] Use Kerberos\n  Next\n[*] Use TLS\nServer: ldap://ipa.example.com\nBase DN: dc=example,dc=com\n  Next\nRealm: EXAMPLE.COM\n[*] Use DNS to resolve hosts to realms\n[*] Use DNS to locate KDCs for realms\n\n\n\n\nCopy the certificate\n\n\nscp root@ipa.example.com:/root/cacert.p12 /etc/openldap/cacerts/\n\n\n\n\nUncomment the line \"#tls_reqcert never\" from nslcd.conf\n\n\nvim /etc/nslcd.conf\n\n\n\n\nApply settings\n\n\nsystemctl restart nslcd\n\n\n\n\nTest if authentication is working\n\n\ngetent passwd ldapuser1\nsu - ldapuser1",
+            "title": "Client authentication with kerberos & ldap"
         }
     ]
 }

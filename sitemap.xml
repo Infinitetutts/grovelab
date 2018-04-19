@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,7 @@
     
     <url>
      <loc>/linux-sysadmin/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -20,7 +20,7 @@
     
     <url>
      <loc>/linux-commands/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -28,7 +28,7 @@
     
     <url>
      <loc>/linuxtools-commands/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -36,7 +36,7 @@
     
     <url>
      <loc>/text/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -44,7 +44,7 @@
     
     <url>
      <loc>/mysql/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -52,7 +52,7 @@
     
     <url>
      <loc>/apache/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -60,7 +60,7 @@
     
     <url>
      <loc>/git/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -68,7 +68,7 @@
     
     <url>
      <loc>/linux-desktop/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -76,7 +76,7 @@
     
     <url>
      <loc>/macos/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -84,17 +84,43 @@
     
     <url>
      <loc>/opensouce-tools-and-terms/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
+        
     <url>
-     <loc>/rhce/</loc>
-     <lastmod>2018-03-24</lastmod>
+     <loc>/RHCE/resources/</loc>
+     <lastmod>2018-04-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
+    <url>
+     <loc>/RHCE/cmds/</loc>
+     <lastmod>2018-04-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/RHCE/networking/</loc>
+     <lastmod>2018-04-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/RHCE/firewall-cmd/</loc>
+     <lastmod>2018-04-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/RHCE/client-auth-with-kerberos-ldap/</loc>
+     <lastmod>2018-04-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>
