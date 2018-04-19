@@ -78,7 +78,7 @@
     <li class="toctree-l2"><a href="#delete-clean-cache-to-free-up-memory">Delete clean cache to free up memory</a></li>
     
 
-    <li class="toctree-l2"><a href="#wikimedia-php-mail-function">WikiMedia PHP mail function</a></li>
+    <li class="toctree-l2"><a href="#send-emails">Send Emails</a></li>
     
 
     <li class="toctree-l2"><a href="#ufw-disable-ipv6-rules">UFW Disable IPv6 rules</a></li>
@@ -125,11 +125,6 @@
             <li class="toctree-l1">
 		
     <a class="" href="../macos/">MacOS</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../opensouce-tools-and-terms/">Linux Tools and Terms</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -339,7 +334,7 @@ Ubuntu</p>
 
 <p>This is a non-destructive operation and will not free any dirty objects. Use of this file can cause performance problems. Since it discards cached objects, it may cost a significant amount of I/O and CPU to recreate the dropped objects, especially if they were under heavy use.</p>
 <p>“sync” only makes dirty cache to clean cache. cache is still preserved. drop_caches doesn’t touch dirty caches and only drops clean caches. So to make all memory free, it is necessary to do sync first before drop_caches in case flushing daemons hasn’t written the changes to disk.</p>
-<h2 id="wikimedia-php-mail-function">WikiMedia PHP mail function</h2>
+<h2 id="send-emails">Send Emails</h2>
 <pre><code class="bash">sudo apt-get install sendmail 
 sudo sendmailconfig 
 </code></pre>
